@@ -51,12 +51,12 @@ export default {
   },
   created () {
     this.fetchTweets()
+    this.fetchRecommendUsers()
   },
   methods: {
-    async fetchTweets () {
+    async fetchRecommendUsers() {
       try {
         this.isLoading = true
-
         const responseTweets = await tweetsAPI.getTweets()
         this.tweets = Array.from( responseTweets.data )
 
