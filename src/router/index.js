@@ -48,6 +48,30 @@ const routes = [
     name: "replylist",
     component: () => import("../views/ReplyList.vue"),
   },
+
+  {
+    path: "/user",
+    name: "user",
+    component: () => import("../views/UserSelf.vue"),
+    children: [
+      {
+        path: "tweets",
+        name: "user-tweets",
+        component: () => import("../components/UserPostList.vue"),
+      },
+      {
+        path: "replied_tweets",
+        name: "user-replied_tweets",
+        component: () => import("../components/UserReplyList.vue"),
+      },
+      {
+        path: "likes",
+        name: "user-likes",
+        component: () => import("../components/UserLikeList.vue"),
+      },
+    ],
+  },
+
   {
     path: "/user/:userId",
     name: "user-id",
@@ -70,28 +94,7 @@ const routes = [
       },
     ]
   },
-  {
-    path: "/user",
-    name: "user",
-    component: () => import("../views/UserSelf.vue"),
-    children: [
-      {
-        path: "",
-        name: "user-tweets",
-        component: () => import("../components/UserPostList.vue"),
-      },
-      {
-        path: "reply",
-        name: "user-reply",
-        component: () => import("../components/UserReplyList.vue"),
-      },
-      {
-        path: "like",
-        name: "user-like",
-        component: () => import("../components/UserLikeList.vue"),
-      },
-    ],
-  },
+  
   {
     path: "/user/:userId",
     name: "user-id-follow",

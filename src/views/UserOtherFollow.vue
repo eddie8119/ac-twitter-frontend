@@ -71,6 +71,7 @@ export default {
     this.fetchUser(userId)
   },
   methods: {
+    // fetch 三個東西 getUser getUserFollowings getUserFollowers
     async fetchUser (userId) {
       try {
         const followingsData = await usersAPI.getUserFollowings({ userId })
@@ -79,8 +80,8 @@ export default {
         const followersData = await usersAPI.getUserFollowers({ userId })
         const followers = followersData.data
 
-        // console.log('followings=', followings)
-        // console.log('followers=', followers)
+        console.log('followings=', followings)
+        console.log('followers=', followers)
 
         const { data } = await usersAPI.getUser({ userId })
 
