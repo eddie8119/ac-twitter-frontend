@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex template-center-alignment">
+  <div class="d-flex justify-content-center">
     <NavBar />
     <div class="main-wrapper">
       <NavpillHeader />
@@ -25,14 +25,18 @@
       <div class="recommendHeader mt-4">
         <h1>推薦跟隨</h1>
       </div>
-      <RecommendColumn />
+      <RecommendColumnFollow
+        :initial-recommend-users="recommendUsers"
+        @fromRCFremove="updateFromRCFremove"
+        @fromRCFadd="updateFromRCFadd"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue"
-import RecommendColumn from "../components/RecommendColumn.vue"
+import RecommendColumnFollow from "../components/RecommendColumnFollow.vue"
 import NavpillHeader from "../components/NavpillHeader.vue"
 import UserProfile from "../components/UserProfile.vue"
 import NavpillUser from "../components/NavpillUser.vue"
@@ -44,7 +48,7 @@ export default {
   name: "UserSelf",
   components: {
     NavBar,
-    RecommendColumn,
+    RecommendColumnFollow,
     NavpillHeader,
     UserProfile,
     NavpillUser,
@@ -66,6 +70,7 @@ export default {
       tweets: [],
       replies: [],
       likes: [],
+      recommendUsers: [],
       isProcessing: false
     }
   },
@@ -77,18 +82,18 @@ export default {
   },
   created () {
     this.fetchFollowingsFollowers()
+    this.fetchRecommendUsers();
   },
   methods: {
     async fetchFollowingsFollowers () {
       try {
         const userId = this.currentUser.id
-        console.log('currentUser id=', userId)
+        // console.log('currentUser=', this.currentUser)
         const followingsData = await usersAPI.getUserFollowings({ userId })
         const followings = followingsData.data
 
         const followersData = await usersAPI.getUserFollowers({ userId })
         const followers = followersData.data
-
         // console.log('followings=', followings)
         // console.log('followers=', followers)
 
@@ -128,7 +133,33 @@ export default {
           title: "無法取得 Tweets 資料",
         });
       }
-    }
+    },
+    async fetchRecommendUsers() {
+      try {
+        this.isLoading = true;
+
+        const { data } = await usersAPI.getUserFollowings({
+          userId: this.currentUser.id,
+        });
+        const userFollowings = data;
+        const responseUsers = await usersAPI.getTopUsers();
+        this.recommendUsers = responseUsers.data.map((user) => {
+          return {
+            ...user,
+            isFollowed: userFollowings.some((f) => f.followingId === user.id),
+          };
+        });
+
+        this.isLoading = false;
+      } catch (error) {
+        console.error(error);
+        this.isLoading = false;
+        Toast.fire({
+          icon: "error",
+          title: "無法取得 RecommendUsers 資料，請稍後再試",
+        });
+      }
+    },
   }
 };
 </script>
