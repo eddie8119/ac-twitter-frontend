@@ -94,7 +94,25 @@ const routes = [
       },
     ]
   },
-  
+
+  {
+    path: "/user",
+    name: "user-follower",
+    component: () => import("../views/UserFollow.vue"),
+    children: [
+      {
+        path: "follower",
+        name: "user-followerlist",
+        component: () => import("../components/UserFollowerList.vue"),
+      },
+      {
+        path: "following",
+        name: "user-followinglist",
+        component: () => import("../components/UserFollowingList.vue"),
+      },
+    ],
+  },
+
   {
     path: "/user/:userId",
     name: "user-id-follow",
@@ -112,23 +130,7 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/user",
-    name: "user-follower",
-    component: () => import("../views/UserFollower.vue"),
-    children: [
-      {
-        path: "follower",
-        name: "user-followerlist",
-        component: () => import("../components/UserFollowerList.vue"),
-      },
-      {
-        path: "following",
-        name: "user-followinglist",
-        component: () => import("../components/UserFollowingList.vue"),
-      },
-    ],
-  },
+  
   {
     path: "/admin",
     name: "admin",

@@ -17,13 +17,20 @@
         alt="個人頭像"
       >
       <div class="ml-2">
-        <div class="d-flex align-items-center">
-          <a
-            href="#"
+        <div class="">
+          <router-link
+            :to="{
+              name: 'user-id-tweets',
+              params: { userId: following.followingId }
+            }"
             class="user-name"
           >
             {{ following.name }}
-          </a>
+          </router-link>
+          <div class="user-acount">
+            <span>@</span>
+            {{ following.account }}
+          </div>
         </div>
         <p class="tweet-content mt-4">
           {{ following.introduction }}
@@ -35,6 +42,8 @@
 
 <script>
 import { emptyImageFilter } from './../utils/mixins'
+import { mapState } from "vuex"
+
 export default {
   name: "UserFollowingList",
   mixins: [emptyImageFilter],
@@ -48,6 +57,9 @@ export default {
     return {
       followings: this.initialFollowings
     }
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
   watch: {
     initialFollowings (newValue) {

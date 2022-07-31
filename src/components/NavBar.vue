@@ -1,10 +1,19 @@
 <template>
   <div id="navbar-container">
+    <PopoutWritingTweet
+      v-if="isModalShown"
+      :show-modal="showModal"
+      :close-modal="closeModal"
+    />
     <img
       class="logo-img"
       src="../assets/logo@2.png"
       alt=""
     >
+<<<<<<< HEAD
+=======
+
+>>>>>>> 47222096195822edcb8888c69869131949e23702
     <ul class="nav-list">
       <li>
         <router-link
@@ -55,10 +64,50 @@
 
     <button
       class="tweet-btn main-btn-style"
-      type="submit"
+      @click="showModal"
     >
       推文
     </button>
+<<<<<<< HEAD
+=======
+
+    <li>
+      <router-link
+        to="/main"
+        class="nav-link"
+      >
+        <img
+          src="../assets/icon_home.png"
+          alt=""
+          class="icon-container"
+        >
+        <img
+          src="../assets/atIndex@2x.png"
+          alt=""
+          class="icon-container"
+        >
+        <span class="navbar-index">推文清單</span>
+      </router-link>
+    </li>
+    <li>
+      <router-link
+        to="/user"
+        class="nav-link"
+      >
+        <img
+          src="../assets/icon_user.png"
+          alt=""
+          class="icon-container"
+        >
+        <img
+          src="../assets/atUser.png"
+          alt=""
+          class="icon-container"
+        >
+        <span class="navbar-index">使用者列表</span>
+      </router-link>
+    </li>
+>>>>>>> 47222096195822edcb8888c69869131949e23702
 
     <template v-if="isAuthenticated">
       <ul class="nav-list nav-list-bottom">
@@ -86,16 +135,30 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
+import PopoutWritingTweet from '../components/PopoutWritingTweet.vue';
+
 export default {
-  computed: {
-    ...mapState(["currentUser", "isAuthenticated"]),
-  },
-  methods: {
-    logout() {
-      this.$store.commit("revokeAuthentication");
-      this.$router.push("/login");
+    components: { PopoutWritingTweet },
+    data() {
+        return {
+            isModalShown: false,
+        };
     },
-  },
+    computed: {
+        ...mapState(["currentUser", "isAuthenticated"]),
+    },
+    methods: {
+        logout() {
+            this.$store.commit("revokeAuthentication");
+            this.$router.push("/login");
+        },
+        showModal() {
+            this.isModalShown = true;
+        },
+        closeModal() {
+            this.isModalShown = false;
+        },
+    },
 };
 </script>

@@ -8,6 +8,7 @@
       <NavpillUserFollow
         :initial-user="user"
       />
+
       <div class="y-scroll">
         <router-view
           :initial-followers="followers"
@@ -15,7 +16,7 @@
         />
       </div>
     </div>
-
+    
     <div id="recommendColumn-container">
       <div class="recommendHeader mt-4">
         <h1>推薦跟隨</h1>
@@ -34,14 +35,14 @@ import { Toast } from '../utils/helpers'
 import usersAPI from "../apis/users"
 
 export default {
-  name: "UserOtherFollow",
+  name: "UserFollow",
   components: {
     NavBar,
     RecommendColumn,
     NavpillHeader,
     NavpillUserFollow,
   },
-  beforeRouteUpdate (to, from, next) {
+beforeRouteUpdate (to, from, next) {
     const { userId } = to.params
     this.fetchUser(userId)
     next()
@@ -76,11 +77,9 @@ export default {
       try {
         const followingsData = await usersAPI.getUserFollowings({ userId })
         const followings = followingsData.data
-        this.followings = followings
 
         const followersData = await usersAPI.getUserFollowers({ userId })
         const followers = followersData.data
-        this.followers = followers
 
         console.log('followings=', followings)
         console.log('followers=', followers)
