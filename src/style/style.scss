@@ -213,7 +213,7 @@
   }
 }
 .user-post-under-line {
-  width: 100%;
+  width: 639px;
   height: 3px;
   background-color: var(--borderColor);
 }
@@ -414,9 +414,24 @@
         @include emptyBtnStyleChange;
       }
     }
-    .profile-btn {
+    .profile-btn,
+    .profile-btn-solid {
       width: 40px;
       height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;  
+    }
+    .profile-btn {      
+      border: 1px solid var(--orange);          
+    }
+    .profile-btn-solid {
+      background-color: var(--orange);
+    }    
+    .profile-btn-size{
+      width: 21px;
+      height: 21px;
     }
     .user-describe {
       color: var(--contentTextColor);
