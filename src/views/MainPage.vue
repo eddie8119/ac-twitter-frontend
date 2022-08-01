@@ -21,50 +21,77 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar.vue';
-import RecommendColumn from '../components/RecommendColumn.vue';
+import NavBar from '../components/NavBar.vue'
+import RecommendColumn from '../components/RecommendColumn.vue'
 import NavpillHeaderMain from '../components/NavpillHeaderMain.vue';
-import WrittingTweet from '../components/WrittingTweet.vue';
-import TweetList from '../components/TweetList.vue';
-import tweetsAPI from './../apis/tweets';
-import { Toast } from './../utils/helpers';
+import WrittingTweet from '../components/WrittingTweet.vue'
+import TweetList from '../components/TweetList.vue'
+import tweetsAPI from './../apis/tweets'
+import usersAPI from './../apis/users'
+import { Toast } from './../utils/helpers'
+import { mapState } from "vuex"
 
 export default {
-	name: 'MainPage',
-	components: {
-		NavBar,
-		RecommendColumn,
-		NavpillHeaderMain,
-		WrittingTweet,
-		TweetList,
-	},
-	data() {
-		return {
-			tweets: [],
-			isLoading: true,
-		};
-	},
-	created() {
-		this.fetchTweets();
-	},
-	methods: {
-		async fetchTweets() {
-			try {
-				this.isLoading = true;
+  name: 'MainPage',
+  components: {
+    NavBar,
+    RecommendColumn,
+    NavpillHeaderMain,
+    WrittingTweet,
+    TweetList,
+  },
+  data() {
+    return {
+      tweets: [],
+      likes: [],
+      isLoading: true,
+    };
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+  },
+  created() {
+    this.fetchUserLikes(this.currentUser.id)
+    this.fetchTweets()
+  },
+  methods: {
+    async fetchUserLikes (userId) {
+      try {
+        this.isLoading = true;
+        console.log('userId=', userId)
+        const likes = await usersAPI.getUserLikes({userId});
+        this.likes = likes.data
+        console.log('this.likes=', this.likes)
 
-				const responseTweets = await tweetsAPI.getTweets();
-				this.tweets = Array.from(responseTweets.data);
+        this.isLoading = false;
+      } catch (error) {
+        console.error(error);
+        this.isLoading = false;
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得 UserLikes 資料，請稍後再試',
+        });
+      }
+    },
+    async fetchTweets() {
+      try {
+        this.isLoading = true;
 
-				this.isLoading = false;
-			} catch (error) {
-				console.error(error);
-				this.isLoading = false;
-				Toast.fire({
-					icon: 'error',
-					title: '無法取得 Tweets 資料，請稍後再試',
-				});
-			}
-		}
-	},
+        const responseTweets = await tweetsAPI.getTweets();
+        this.tweets = responseTweets.data
+        console.log('this.tweets=', this.tweets)
+        this.tweets = this.tweets.map()
+
+        this.isLoading = false;
+      } catch (error) {
+        console.error(error);
+        this.isLoading = false;
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得 Tweets 資料，請稍後再試',
+        });
+      }
+    }
+  },
 };
 </script>

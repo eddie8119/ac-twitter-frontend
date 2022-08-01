@@ -46,12 +46,16 @@
           >
           <span class="reply-number ml-1">{{ tweet.replyCount }}</span>
         </div>
+
         <div class="d-flex align-items-center ml-8">
-          <img
-            src="../assets/like.png"
-            alt=""
-            class="tweet-icon-show"
-          >
+          <button>
+            <img
+              src="../assets/like.png"
+              alt=""
+              class="tweet-icon-show"
+              @click.stop.prevent="addLike(tweet.id)"
+            >
+          </button>
           <span class="like-number ml-1">{{ tweet.likeCount }}</span>
         </div>
       </div>
@@ -60,8 +64,9 @@
 </template>
 
 <script>
-import { emptyImageFilter } from './../utils/mixins'
-import { fromNowFilter } from "./../utils/mixins";
+import { emptyImageFilter, fromNowFilter } from './../utils/mixins'
+import usersAPI from './../apis/users'
+import { Toast } from './../utils/helpers'
 
 export default {
   name: "TweetList",
@@ -78,5 +83,30 @@ export default {
       isProcessing: false,
     };
   },
+  methods: {
+    async addLike (tweetId) {
+      try {
+        this.isProcessing = true
+        console.log('tweetId=',tweetId)
+        const { data } = await usersAPI.addLike({ tweetId })
+        console.log('data=',data)
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+        this.tweet = {
+          ...this.tweet,
+          isLiked: true
+        }
+        this.isProcessing = false
+      } catch (error) {
+        console.error(error.message)
+        this.isProcessing = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法對 Tweet 按讚，請稍後再試'
+        })
+      }
+    }
+  }
 };
 </script>
