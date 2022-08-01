@@ -3,7 +3,7 @@
     <NavBar :show-modal="showModal" />
     <div class="main-wrapper">
       <NavpillHeaderMain />
-      <WrittingTweet />
+      <WrittingTweet @fetch-tweet="fetchTweets" />
       <TweetList
         v-for="tweet in tweets"
         :key="tweet.id"
@@ -23,7 +23,7 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import RecommendColumn from '../components/RecommendColumn.vue'
-import NavpillHeaderMain from '../components/NavpillHeaderMain.vue';
+import NavpillHeaderMain from '../components/NavpillHeaderMain.vue'
 import WrittingTweet from '../components/WrittingTweet.vue'
 import TweetList from '../components/TweetList.vue'
 import tweetsAPI from './../apis/tweets'
