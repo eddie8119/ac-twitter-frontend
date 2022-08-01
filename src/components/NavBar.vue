@@ -10,10 +10,7 @@
       src="../assets/logo@2.png"
       alt=""
     >
-<<<<<<< HEAD
-=======
 
->>>>>>> 47222096195822edcb8888c69869131949e23702
     <ul class="nav-list">
       <li>
         <router-link
@@ -68,8 +65,6 @@
     >
       推文
     </button>
-<<<<<<< HEAD
-=======
 
     <li>
       <router-link
@@ -107,7 +102,6 @@
         <span class="navbar-index">使用者列表</span>
       </router-link>
     </li>
->>>>>>> 47222096195822edcb8888c69869131949e23702
 
     <template v-if="isAuthenticated">
       <ul class="nav-list nav-list-bottom">
