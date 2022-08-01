@@ -3,7 +3,7 @@
     <NavBar :show-modal="showModal" />
     <div class="main-wrapper">
       <NavpillHeaderMain />
-      <WrittingTweet />
+      <WrittingTweet @fetch-tweet="fetchTweets" />
       <TweetList
         v-for="tweet in tweets"
         :key="tweet.id"
