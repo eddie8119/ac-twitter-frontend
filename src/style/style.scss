@@ -253,14 +253,24 @@
         @include userHeadshotSetting;
         margin-right: 8px;
       }
-      .empty-btn-style {
+      .empty-btn-style,
+      .second-btn-style {
         position: absolute;
         right: 16px;
-        @include emptyBtnStyle;
         padding: 8px 16px;
+      }
+      .empty-btn-style {        
+        @include emptyBtnStyle;        
         &:hover,
         &:active {
           @include emptyBtnStyleChange;
+        }
+      }
+      .second-btn-style {        
+        @include secondBtnStyle;
+        &:hover,
+        &:active {
+          @include secondBtnStyleChange;
         }
       }
     }
