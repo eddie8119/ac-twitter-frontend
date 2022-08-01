@@ -52,7 +52,7 @@ export default {
 						title: '推文內容不能為空白',
 					})
 					return
-				} 
+				}
 				await tweetAPI.postTweet(trimmedTweet)
 				this.tweet = ''
 				this.$emit('fetch-tweet')
