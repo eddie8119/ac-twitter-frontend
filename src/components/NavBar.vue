@@ -10,6 +10,7 @@
       src="../assets/logo@2.png"
       alt=""
     >
+
     <template v-if="1 ===1">
       <ul class="nav-list">
         <li>
@@ -86,6 +87,7 @@
     >
       推文
     </button>  
+
     <template v-if="isAuthenticated">
       <ul class="nav-list nav-list-bottom">
         <li>
