@@ -51,36 +51,32 @@ export default {
     ...mapState(["currentUser"]),
   },
   created() {
-    this.fetchUserLikes(this.currentUser.id)
     this.fetchTweets()
   },
   methods: {
-    async fetchUserLikes (userId) {
-      try {
-        this.isLoading = true;
-        console.log('userId=', userId)
-        const likes = await usersAPI.getUserLikes({userId});
-        this.likes = likes.data
-        console.log('this.likes=', this.likes)
-
-        this.isLoading = false;
-      } catch (error) {
-        console.error(error);
-        this.isLoading = false;
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得 UserLikes 資料，請稍後再試',
-        });
-      }
-    },
     async fetchTweets() {
       try {
         this.isLoading = true;
 
+        const likes = await usersAPI.getUserLikes({userId: this.currentUser.id});
+        this.likes = likes.data
+
         const responseTweets = await tweetsAPI.getTweets();
         this.tweets = responseTweets.data
-        console.log('this.tweets=', this.tweets)
-        this.tweets = this.tweets.map()
+        // console.log('this.tweets=', this.tweets)
+        this.tweets = this.tweets.map( tweet => {
+          if( this.likes.some(l => l.TweetId === tweet.id) ) {
+            return {
+              ...tweet,
+              isLiked: true
+            }
+          } else {
+            return {
+              ...tweet,
+              isLiked: false
+            }
+          }
+        })
 
         this.isLoading = false;
       } catch (error) {

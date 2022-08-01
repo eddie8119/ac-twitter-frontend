@@ -33,5 +33,8 @@ export default {
   },
   addLike({ tweetId }) {
     return apiHelper.post(`/tweets/${tweetId}/like`)
+  },
+  unLike({ tweetId }) {
+    return apiHelper.post(`/tweets/${tweetId}/unlike`)
   }
 }
