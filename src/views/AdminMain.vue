@@ -1,8 +1,9 @@
 <template>
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center"> 
     <NavBar />
-    <div class="main-wrapper">
-      <NavpillHeaderMain />      
+    <div class="admin-main-wrapper ml-6">
+      <NavpillHeaderMain />
+      <AdminTweetElement />      
     </div>   
   </div>
 </template>
@@ -10,14 +11,14 @@
 <script>
 import NavBar from '../components/NavBar.vue';
 import NavpillHeaderMain from '../components/NavpillHeaderMain.vue';
-
-
+import AdminTweetElement from '../components/AdminTweetElement.vue';
 
 export default {
 	name: 'MainPage',
 	components: {
 		NavBar,		
-		NavpillHeaderMain,		
+		NavpillHeaderMain,
+        AdminTweetElement,		
 	},
 	data() {
 		return {

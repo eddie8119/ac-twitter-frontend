@@ -1,0 +1,34 @@
+<template>
+  <div id="admin-tweet-element-container">
+    <img
+      class="user-headshot"
+      src="../assets/User Photo.png"
+      alt="個人頭像"
+    >
+    <div class="ml-2">
+      <div class="d-flex">
+        <a
+          href="#"
+          class="user-name"
+        >Pizza Hut</a>
+        <p class="user-acount-for-post ml-2">
+          <span>@</span>pizzahut<span> • </span>
+        </p>
+        <p class="post-time">
+          3小時
+        </p>
+      </div>
+      <p class="tweet-content mt-2">
+        By default, flex items will all try to fit onto one line. You can change
+        that and allow the items to wrap as needed with this property
+      </p>        
+    </div>
+    <button>
+      <img
+        src="../assets/delete_list.png"
+        class="delete-icon-size"
+        alt=""
+      >
+    </button>        
+  </div>
+</template>
