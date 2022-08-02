@@ -2,7 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 // import process from "process"
 
-const baseURL = "http://localhost:3000/api";
+const baseURL = process.env.VUE_APP_BASE_URL || "https://twitterac.herokuapp.com/api";
 
 const axiosInstance = axios.create({
   baseURL
