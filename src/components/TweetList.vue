@@ -48,15 +48,29 @@
         </div>
 
         <div class="d-flex align-items-center ml-8">
-          <button>
+          <button
+            v-if="tweet.isLiked"
+          >
+            <img
+              src="../assets/likedx2.png"
+              alt="likedx2.png"
+              class="tweet-icon-show"
+              @click.stop.prevent="unLike(tweet.id)"
+            >
+          </button>
+          <button
+            v-else
+          >
             <img
               src="../assets/like.png"
-              alt=""
+              alt="like.png"
               class="tweet-icon-show"
               @click.stop.prevent="addLike(tweet.id)"
             >
           </button>
-          <span class="like-number ml-1">{{ tweet.likeCount }}</span>
+          <span class="like-number ml-1">
+            {{ tweet.likeCount }}
+          </span>
         </div>
       </div>
     </div>
@@ -95,7 +109,8 @@ export default {
         }
         this.tweet = {
           ...this.tweet,
-          isLiked: true
+          isLiked: true,
+          likeCount: this.tweet.likeCount+1
         }
         this.isProcessing = false
       } catch (error) {
@@ -103,7 +118,31 @@ export default {
         this.isProcessing = false
         Toast.fire({
           icon: 'error',
-          title: '無法對 Tweet 按讚，請稍後再試'
+          title: '無法對 Tweet 按 Like，請稍後再試'
+        })
+      }
+    },
+    async unLike (tweetId) {
+      try {
+        this.isProcessing = true
+        console.log('tweetId=',tweetId)
+        const { data } = await usersAPI.unLike({ tweetId })
+        console.log('data=',data)
+        if (data.status === 'error') {
+          throw new Error(data.message)
+        }
+        this.tweet = {
+          ...this.tweet,
+          isLiked: false,
+          likeCount: this.tweet.likeCount-1
+        }
+        this.isProcessing = false
+      } catch (error) {
+        console.error(error.message)
+        this.isProcessing = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法對 Tweet 取消 Like，請稍後再試'
         })
       }
     }

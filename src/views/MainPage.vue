@@ -77,10 +77,25 @@ export default {
       try {
         this.isLoading = true;
 
+        const likes = await usersAPI.getUserLikes({userId: this.currentUser.id});
+        this.likes = likes.data
+
         const responseTweets = await tweetsAPI.getTweets();
         this.tweets = responseTweets.data
-        console.log('this.tweets=', this.tweets)
-        this.tweets = this.tweets.map()
+        // console.log('this.tweets=', this.tweets)
+        this.tweets = this.tweets.map( tweet => {
+          if( this.likes.some(l => l.TweetId === tweet.id) ) {
+            return {
+              ...tweet,
+              isLiked: true
+            }
+          } else {
+            return {
+              ...tweet,
+              isLiked: false
+            }
+          }
+        })
 
         this.isLoading = false;
       } catch (error) {
