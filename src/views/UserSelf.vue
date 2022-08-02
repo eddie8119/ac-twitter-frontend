@@ -1,6 +1,8 @@
 <template>
   <div class="d-flex justify-content-center">
-    <NavBar />
+    <NavBar
+      :initial-profile="isProfile"
+    />
     <div class="main-wrapper">
       <NavpillHeader />
       <UserProfile
@@ -83,6 +85,7 @@ export default {
       isTweetsActive: '',
       isRepliesActive: '',
       isLikesActive: '',
+      isProfile: true,
       isProcessing: false
     }
   },
