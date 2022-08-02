@@ -471,6 +471,12 @@
   .navpill-title {
     @include navpillTitleStyle;
   }
+  .active {
+    @include navpillTitleContainerChange;
+      .navpill-title {
+        @include navpillTitleChange;
+      }
+  }
 }
 
 #user-follower-list-container {

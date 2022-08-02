@@ -3,35 +3,37 @@
     id="navpillUser-container"
     class="d-flex"
   >
-    <div class="navpill-title-container">
+    <div :class="['navpill-title-container', { active: $router.name === 'user-tweets' }]">
       <router-link
         :to="{
           name: 'user-id-tweets',
           params: { userId: user.id }
         }"
-        class="navpill-title"
+        class="navpill-title"        
       >
         推文
       </router-link>
     </div>
-    <div class="navpill-title-container">
+    <div
+      :class="['navpill-title-container', { active: $router.name === 'user-replied-tweets' }]"      
+    >
       <router-link
         :to="{
           name: 'user-id-replied_tweets',
           params: { userId: user.id }
         }"
-        class="navpill-title"
+        class="navpill-title"                
       >
         回覆
       </router-link>
     </div>
-    <div class="navpill-title-container">
+    <div :class="['navpill-title-container', { active: $router.name === 'user-likes' }]">
       <router-link
         :to="{
           name: 'user-id-likes',
           params: { userId: user.id }
         }"
-        class="navpill-title"
+        class="navpill-title"        
       >
         喜歡的內容
       </router-link>

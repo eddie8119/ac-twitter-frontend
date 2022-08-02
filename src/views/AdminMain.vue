@@ -14,7 +14,7 @@ import NavpillHeaderMain from '../components/NavpillHeaderMain.vue';
 import AdminTweetElement from '../components/AdminTweetElement.vue';
 
 export default {
-	name: 'MainPage',
+	name: 'AdminMain',
 	components: {
 		NavBar,		
 		NavpillHeaderMain,

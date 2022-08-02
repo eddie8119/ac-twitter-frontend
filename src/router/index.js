@@ -68,7 +68,7 @@ const routes = [
       },
       {
         path: "replied_tweets",
-        name: "user-replied_tweets",
+        name: "user-replied-tweets",
         component: () => import("../components/UserReplyList.vue"),
       },
       {
