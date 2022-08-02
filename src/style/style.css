@@ -1098,6 +1098,10 @@ input:invalid {
   color: var(--white);
   background-color: var(--orange);
 }
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style-active:hover {
+  color: var(--orange);
+  background-color: var(--white);
+}
 
 .user-acount-for-post,
 .post-time {
@@ -1276,6 +1280,10 @@ input:invalid {
   color: var(--white);
   background-color: var(--orange);
 }
+#userProfile-container .profile-info-container .empty-btn-style-active:hover {
+  color: var(--orange);
+  background-color: var(--white);
+}
 #userProfile-container .profile-info-container .profile-btn {
   width: 40px;
   height: 40px;
@@ -1366,6 +1374,10 @@ input:invalid {
 #user-follower-list-container .empty-btn-style:hover, #user-follower-list-container .empty-btn-style:active, #user-follower-list-container .empty-btn-style-active {
   color: var(--white);
   background-color: var(--orange);
+}
+#user-follower-list-container .empty-btn-style-active:hover {
+  color: var(--orange);
+  background-color: var(--white);
 }
 
 #setting-form-container {
