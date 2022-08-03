@@ -1146,6 +1146,23 @@ input:invalid {
   background-color: var(--white);
   border: 1px solid var(--orange);
 }
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--orange);
+  height: 40px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style:hover, #recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style:active {
+  color: var(--orange);
+  background-color: var(--white);
+  border: 1px solid var(--orange);
+}
 
 .user-acount-for-post,
 .post-time {
