@@ -23,7 +23,7 @@
       </div>
       <RecommendColumn
         :initial-recommend-users="recommendUsers"
-        @fromRCF="updatePage"
+        @updateRecommendColumn="updatePage"
       />
     </div>
   </div>
