@@ -171,11 +171,21 @@ export default {
             ...reply
           }
         })
-        // console.log('replies=', this.replies)
 
         const likes = await usersAPI.getUserLikes({ userId: this.user.id })
-        this.likes = likes.data
-        // console.log('likes=', this.likes)
+        this.likes = likes.data.map( like => {
+          if( this.currentUserLikes.some(l => l.TweetId === like.TweetId) ) {
+            return {
+              ...like,
+              isLiked: true
+            }
+          } else {
+            return {
+              ...like,
+              isLiked: false
+            }
+          }
+        })
 
       } catch (error) {
         console.error(error.message);

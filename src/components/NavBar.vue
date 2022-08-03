@@ -151,15 +151,17 @@
           >
             <div class="icon-container">
               <img
-                src="../assets/log out.png"
+                src="../assets/logout_black-removebg-preview.png"
                 alt=""
-                class="icon-size"
+                class="icon-size logout-icon"
               >
             </div>
             <span
               class="navbar-index"
               @click="logout"
-            >登出</span>
+            >
+              登出
+            </span>
           </a>
         </li>
       </ul>

@@ -935,6 +935,9 @@ input:invalid {
 #navbar-container .nav-link:hover .setting-icon, #navbar-container .nav-link:active .setting-icon {
   content: url("../assets/Group_big-removebg-preview.png");
 }
+#navbar-container .nav-link:hover .logout-icon, #navbar-container .nav-link:active .logout-icon {
+  content: url("../assets/log_out_big-removebg-preview.png");
+}
 #navbar-container .nav-link .icon-container {
   width: 22px;
   height: 22px;
