@@ -48,12 +48,25 @@ const routes = [
         name: "modal-tweet",
         component: () => import("../components/PopoutWritingTweet.vue"),
       },
-    ]
+      {
+        path: "reply-modal",
+        name: "reply-modal",
+        component: () => import("../components/PopoutReply.vue")
+      }
+    ],
+    
   },
   {
     path: "/replylist",
     name: "replylist",
     component: () => import("../views/ReplyList.vue"),
+    children: [
+      {
+        path: "reply-modal",
+        name: "reply-modal",
+        component: () => import("../components/PopoutReply.vue")
+      }
+    ]
   },
 
   {

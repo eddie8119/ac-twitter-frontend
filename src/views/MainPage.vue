@@ -1,24 +1,26 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <NavBar :show-modal="showModal" />
-    <div class="main-wrapper">
-      <NavpillHeaderMain />
-      <WrittingTweet @fetch-tweet="fetchTweets" />
-      <TweetList
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
-      />
-    </div>
-
-    <div id="recommendColumn-container">
-      <div class="recommendHeader mt-4">
-        <h1>推薦跟隨</h1>
+  <div class="wrapper">
+    <div class="d-flex justify-content-center">
+      <NavBar :show-modal="showModal" />
+      <div class="main-wrapper">
+        <NavpillHeaderMain />
+        <WrittingTweet @fetch-tweet="fetchTweets" />
+        <TweetList
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+        />
       </div>
-      <RecommendColumn
-        :initial-recommend-users="recommendUsers"
-        @fromRCF="updatePage"
-      />
+
+      <div id="recommendColumn-container">
+        <div class="recommendHeader mt-4">
+          <h1>推薦跟隨</h1>
+        </div>
+        <RecommendColumn
+          :initial-recommend-users="recommendUsers"
+          @fromRCF="updatePage"
+        />
+      </div>
     </div>
   </div>
 </template>
