@@ -5,31 +5,82 @@
       id="user-post-list-container"
       :key="tweet.id"
     >
-      <img
-        class="user-headshot"
-        :src="tweet.User.avatar | emptyImage"
-        alt="個人頭像"
+      <router-link
+        v-if="tweet.isCurrentUser"
+        :to="{
+          name: 'user-tweets' // 導引至 UserSelf.vue
+        }"
       >
+        <img
+          class="user-headshot"
+          :src="tweet.User.avatar | emptyImage"
+          alt="個人頭像"
+        >
+      </router-link>
+      <router-link
+        v-else
+        :to="{
+          name: 'user-id-tweets', // 導引至 UserOther.vue
+          params: { userId: tweet.UserId }
+        }"
+      >
+        <img
+          class="user-headshot"
+          :src="tweet.User.avatar | emptyImage"
+          alt="個人頭像"
+        >
+      </router-link>
+
       <div class="ml-2">
         <div class="d-flex align-items-center">
-          <a
-            href="#"
+          <router-link
+            v-if="tweet.isCurrentUser"
+            :to="{
+              name: 'user-tweets' // 導引至 UserSelf.vue
+            }"
             class="user-name"
           >
             {{ tweet.User.name }}
-          </a>
-          <p class="user-acount-for-post ml-2">
-            <span>@</span>
-            {{ tweet.User.account }}
-            <span> • </span>
-          </p>
+            <span class="user-acount-for-post ml-2">
+              <span>@</span>
+              {{ tweet.User.account }}
+              <span> • </span>
+            </span>
+          </router-link>
+          <router-link
+            v-else
+            :to="{
+              name: 'user-id-tweets', // 導引至 UserOther.vue
+              params: { userId: tweet.UserId }
+            }"
+            class="user-name"
+          >
+            {{ tweet.User.name }}
+            <span class="user-acount-for-post ml-2">
+              <span>@</span>
+              {{ tweet.User.account }}
+              <span> • </span>
+            </span>
+          </router-link>
+
           <p class="post-time">
             {{ tweet.createdAt | fromNow }}
           </p>
         </div>
-        <p class="tweet-content mt-2">
-          {{ tweet.description }}
-        </p>
+
+        <router-link
+          :to="{
+            name: 'replylist',
+            query: {
+              tweetId: tweet.id
+            }
+          }"
+        >
+          <p class="tweet-content mt-2">
+            {{ tweet.description }}
+          </p>
+        </router-link>
+
         <div class="tweet-icon-show-pannel d-flex mt-1">
           <a
             href=""
@@ -77,8 +128,7 @@
 </template>
 
 <script>
-import { fromNowFilter } from './../utils/mixins'
-import { emptyImageFilter } from './../utils/mixins'
+import { fromNowFilter, emptyImageFilter } from './../utils/mixins'
 import usersAPI from './../apis/users'
 import { Toast } from './../utils/helpers'
 
@@ -110,7 +160,6 @@ export default {
         this.isProcessing = true
         console.log('tweetId=',tweetId)
         const { data } = await usersAPI.addLike({ tweetId })
-        console.log('data=',data)
         if (data.status === 'error') {
           throw new Error(data.message)
         }
@@ -127,6 +176,7 @@ export default {
             return t
           }
         })
+        this.$emit('updateLikes')
 
         this.isProcessing = false
       } catch (error) {
@@ -143,7 +193,6 @@ export default {
         this.isProcessing = true
         console.log('tweetId=',tweetId)
         const { data } = await usersAPI.unLike({ tweetId })
-        console.log('data=',data)
         if (data.status === 'error') {
           throw new Error(data.message)
         }
@@ -160,6 +209,7 @@ export default {
             return t
           }
         })
+        this.$emit('updateLikes')
 
         this.isProcessing = false
       } catch (error) {

@@ -13,9 +13,12 @@ export default {
     })
   },
   adminSignIn({ account, password }) {
-    return apiHelper.post('/admin', {
+    return apiHelper.post('/signin', {
       account,
       password
     })
   },
+  deleteTweet({tweetId}) {
+    return apiHelper.delete(`/admin/tweets/${tweetId}`)
+  }
 }

@@ -1,6 +1,8 @@
 <template>
   <div class="d-flex justify-content-center">
-    <NavBar />
+    <NavBar
+      :initial-profile="isProfile"
+    />
     <div class="main-wrapper">
       <NavpillHeader />
       <UserProfile
@@ -10,13 +12,17 @@
       <!-- 包含 推文、回覆、喜歡的內容 三個分頁 -->
       <NavpillUser
         :initial-user="user"
+        :initial-is-current-user="isCurrentUser"
+        :initial-tweets-active="isTweetsActive"
+        :initial-replies-active="isRepliesActive"
+        :initial-likes-active="isLikesActive"
       />
-      <div class="y-scroll">
+      <div class="y-scroll scrollbar">
         <router-view
           :initial-tweets="tweets"
           :initial-replies="replies"
           :initial-likes="likes"
-          @fromUserLikeList="updatePage"
+          @updateLikes="fetchUserTweetsRepliesLikes"
         />
       </div>
     </div>
@@ -52,6 +58,10 @@ export default {
     UserProfile,
     NavpillUser,
   },
+  beforeRouteUpdate(to, from, next) {
+    this.updateRouteName(to.name)
+    next()
+  },
   data () {
     return {
       user: {
@@ -71,6 +81,11 @@ export default {
       likes: [],
       currentUserLikes: [],
       recommendUsers: [],
+      isCurrentUser: false,
+      isTweetsActive: '',
+      isRepliesActive: '',
+      isLikesActive: '',
+      isProfile: true,
       isProcessing: false
     }
   },
@@ -82,10 +97,20 @@ export default {
   },
   created () {
     const userId = this.currentUser.id
-    this.fetchFollowingsFollowers(userId)
+    this.fetchFollowingsFollowers(userId);
     this.fetchRecommendUsers();
+    this.isCurrentUser = true;
+    this.updateRouteName( this.$route.name )
   },
   methods: {
+    updateRouteName(name) {
+      this.isTweetsActive = name === 'user-tweets' ? 'navpill-title-active' : ''
+      this.isRepliesActive = name === 'user-replied_tweets' ? 'navpill-title-active' : ''
+      this.isLikesActive = name === 'user-likes' ? 'navpill-title-active' : ''
+      console.log('isTweetsActive=', this.isTweetsActive)
+      console.log('isRepliesActive=', this.isRepliesActive)
+      console.log('isLikesActive=', this.isLikesActive)
+    },
     updatePage() {
       const userId = this.currentUser.id
       this.fetchFollowingsFollowers(userId);
@@ -99,8 +124,6 @@ export default {
 
         const followersData = await usersAPI.getUserFollowers({ userId })
         const followers = followersData.data
-        // console.log('followings=', followings)
-        // console.log('followers=', followers)
 
         this.user = {
           ...this.currentUser,
@@ -124,9 +147,8 @@ export default {
         this.currentUserLikes = currentUserLikes.data
 
         const tweets = await usersAPI.getUserTweets({ userId: this.user.id })
-        this.tweets = tweets.data
-        // console.log('tweets=', this.tweets)
-        this.tweets = this.tweets.map( tweet => {
+        this.tweets = tweets.data.map( tweet => {
+          tweet.isCurrentUser = tweet.UserId === this.currentUser.id ? true : false
           if( this.currentUserLikes.some(l => l.TweetId === tweet.id) ) {
             return {
               ...tweet,
@@ -141,18 +163,33 @@ export default {
         })
 
         const replies = await usersAPI.getUserReplies({ userId: this.user.id })
-        this.replies = replies.data
-        // console.log('replies=', this.replies)
+        this.replies = replies.data.map( reply => {
+          reply.isCurrentUser = reply.UserId === this.currentUser.id ? true : false
+          return {
+            ...reply
+          }
+        })
 
         const likes = await usersAPI.getUserLikes({ userId: this.user.id })
-        this.likes = likes.data
-        // console.log('likes=', this.likes)
+        this.likes = likes.data.map( like => {
+          if( this.currentUserLikes.some(l => l.TweetId === like.TweetId) ) {
+            return {
+              ...like,
+              isLiked: true
+            }
+          } else {
+            return {
+              ...like,
+              isLiked: false
+            }
+          }
+        })
 
       } catch (error) {
         console.error(error.message);
         Toast.fire({
           icon: "error",
-          title: "無法取得 Tweets 資料",
+          title: "無法取得 Tweets Replies Likes 資料",
         });
       }
     },
