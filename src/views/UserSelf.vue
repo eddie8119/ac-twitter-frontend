@@ -11,8 +11,7 @@
       <NavpillUser
         :initial-user="user"
       />
-
-      <div class="y-scroll">
+      <div class="y-scroll scrollbar">
         <router-view
           :initial-tweets="tweets"
           :initial-replies="replies"

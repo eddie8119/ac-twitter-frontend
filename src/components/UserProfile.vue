@@ -14,13 +14,15 @@
       alt="個人頭像"
     >
     <div class="profile-info-container">
-      <div class="d-flex justify-content-end">             
-        <button
-          class="edit-profile-btn empty-btn-style ml-4"
-          type="submit"
-        >
-          編輯個人資料
-        </button>
+      <div class="d-flex justify-content-end">
+        <router-link to="/user/edit">
+          <button
+            class="edit-profile-btn empty-btn-style ml-4"
+            type="submit"
+          >
+            編輯個人資料
+          </button>
+        </router-link>
       </div>
       <h4 class="user-name mt-4">
         {{ user.name }}

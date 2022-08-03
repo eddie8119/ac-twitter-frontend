@@ -6,9 +6,11 @@
       <ReplyPost
         :initial-tweetid="tweetId"
       />
-      <PostReplyList
-        :initial-tweetid="tweetId"
-      />
+      <div class="y-scroll scrollbar">
+        <PostReplyList
+          :initial-tweetid="tweetId"
+        />
+      </div>
     </div>
 
     <div id="recommendColumn-container">

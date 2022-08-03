@@ -89,7 +89,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  background-color: var(--bgColor);
 }
 
 html,
@@ -773,14 +772,14 @@ input:invalid {
   --recommendBgColor: #fafafb;
 }
 
-.template-center-alignment {
-  margin: 0 auto;
+.app-body {
+  height: 100%;
 }
 
 .user-name {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 26px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 .user-acount {
@@ -794,6 +793,22 @@ input:invalid {
   overflow-y: scroll;
 }
 
+.scrollbar::-webkit-scrollbar {
+  width: 15px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  width: 8px;
+  height: 25px;
+  left: calc(50% - 4px + 0.5px);
+  top: calc(50% - 12.5px);
+  background: #C1C1C1;
+  border-radius: 4px;
+}
+
 #login-container,
 #regist-container,
 #admin-login-container {
@@ -801,13 +816,14 @@ input:invalid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 69px auto 0 auto;
+  margin: 0 auto;
 }
 #login-container .logo-img,
 #regist-container .logo-img,
 #admin-login-container .logo-img {
   width: 40px;
   height: 40px;
+  margin-top: 69px;
 }
 #login-container h1,
 #regist-container h1,
@@ -830,7 +846,6 @@ input:invalid {
 }
 .form-container label {
   position: absolute;
-  background-color: var(--formBgColor);
   color: var(--secondaryTextColor);
   font-weight: normal;
   font-size: 14px;
@@ -902,32 +917,25 @@ input:invalid {
 
 #navbar-container {
   width: 178px;
+  height: 100%;
+  padding: 13px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 #navbar-container .logo-img {
   width: 40px;
   height: 40px;
-  margin: 13px;
 }
 #navbar-container .nav-list {
   margin-top: 29px;
-  margin-left: 13px;
-}
-#navbar-container .nav-list .nav-link {
-  display: flex;
-  align-items: center;
-}
-#navbar-container .nav-list-bottom {
-  position: absolute;
-  margin-bottom: -24px;
-  bottom: 0;
 }
 #navbar-container .nav-link {
+  display: flex;
+  align-items: center;
   font-weight: 700;
   font-size: 18px;
   color: var(--black);
-  margin-bottom: 40px;
 }
 #navbar-container .nav-link:hover, #navbar-container .nav-link:active {
   color: var(--orange);
@@ -939,6 +947,10 @@ input:invalid {
 #navbar-container .nav-link .navbar-index {
   margin-left: 16.85px;
 }
+#navbar-container li:nth-child(1),
+#navbar-container li:nth-child(2) {
+  margin-bottom: 40px;
+}
 #navbar-container .main-btn-style {
   width: 100%;
   color: var(--white);
@@ -948,15 +960,18 @@ input:invalid {
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  margin-top: -16px;
+  margin-top: 24px;
 }
 #navbar-container .main-btn-style:hover, #navbar-container .main-btn-style:active {
   color: var(--orange);
   background-color: var(--white);
   border: 1px solid var(--orange);
 }
+#navbar-container .nav-list-bottom {
+  margin-top: 200px;
+}
 
-.main-wrapper {
+pos .main-wrapper {
   width: 639px;
   margin-right: 21px;
   margin-left: 24px;
@@ -991,6 +1006,7 @@ input:invalid {
   width: 100%;
   border: 1px solid var(--borderColor);
   padding: 0 25px;
+  border-bottom: 3px solid var(--borderColor);
 }
 #writtingTweet-container .writtingTweet-pannel {
   width: 100%;
@@ -1017,7 +1033,7 @@ input:invalid {
   color: var(--messageTextColor);
 }
 #writtingTweet-container .writtingTweet-pannel .second-btn-style {
-  width: 64px;
+  width: 68px;
   padding: 8px 16px;
   display: flex;
   align-items: center;
@@ -1034,12 +1050,6 @@ input:invalid {
   color: var(--orange);
   background-color: var(--white);
   border: 1px solid var(--orange);
-}
-
-.user-post-under-line {
-  width: 100%;
-  height: 3px;
-  background-color: var(--borderColor);
 }
 
 #recommendColumn-container {
@@ -1078,9 +1088,13 @@ input:invalid {
   border-radius: 50%;
   margin-right: 8px;
 }
-#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style {
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style,
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style {
   position: absolute;
   right: 16px;
+  padding: 8px 16px;
+}
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style {
   display: flex;
   align-items: center;
   text-align: center;
@@ -1092,11 +1106,27 @@ input:invalid {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  padding: 8px 16px;
 }
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style:hover, #recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style:active {
   color: var(--white);
   background-color: var(--orange);
+}
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--orange);
+  height: 40px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style:hover, #recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style:active {
+  color: var(--orange);
+  background-color: var(--white);
+  border: 1px solid var(--orange);
 }
 
 .user-acount-for-post,
@@ -1116,7 +1146,8 @@ input:invalid {
 
 #tweet-element-container,
 #user-post-list-container,
-#user-like-list-container {
+#user-like-list-container,
+#admin-tweet-element-container {
   width: 100%;
   border: 1px solid var(--borderColor);
   padding: 16px 24px;
@@ -1125,20 +1156,23 @@ input:invalid {
 }
 #tweet-element-container .user-headshot,
 #user-post-list-container .user-headshot,
-#user-like-list-container .user-headshot {
+#user-like-list-container .user-headshot,
+#admin-tweet-element-container .user-headshot {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 #tweet-element-container .tweet-icon-show-pannel,
 #user-post-list-container .tweet-icon-show-pannel,
-#user-like-list-container .tweet-icon-show-pannel {
+#user-like-list-container .tweet-icon-show-pannel,
+#admin-tweet-element-container .tweet-icon-show-pannel {
   width: 100%;
   height: 14px;
 }
 #tweet-element-container .tweet-icon-show-pannel .tweet-icon-show,
 #user-post-list-container .tweet-icon-show-pannel .tweet-icon-show,
-#user-like-list-container .tweet-icon-show-pannel .tweet-icon-show {
+#user-like-list-container .tweet-icon-show-pannel .tweet-icon-show,
+#admin-tweet-element-container .tweet-icon-show-pannel .tweet-icon-show {
   width: 13.17px;
   height: 13.17px;
 }
@@ -1147,7 +1181,9 @@ input:invalid {
 #user-post-list-container .tweet-icon-show-pannel .reply-number,
 #user-post-list-container .tweet-icon-show-pannel .like-number,
 #user-like-list-container .tweet-icon-show-pannel .reply-number,
-#user-like-list-container .tweet-icon-show-pannel .like-number {
+#user-like-list-container .tweet-icon-show-pannel .like-number,
+#admin-tweet-element-container .tweet-icon-show-pannel .reply-number,
+#admin-tweet-element-container .tweet-icon-show-pannel .like-number {
   font-weight: 600;
   font-size: 14px;
   line-height: 14px;
@@ -1276,9 +1312,24 @@ input:invalid {
   color: var(--white);
   background-color: var(--orange);
 }
-#userProfile-container .profile-info-container .profile-btn {
+#userProfile-container .profile-info-container .profile-btn,
+#userProfile-container .profile-info-container .profile-btn-solid {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#userProfile-container .profile-info-container .profile-btn {
+  border: 1px solid var(--orange);
+}
+#userProfile-container .profile-info-container .profile-btn-solid {
+  background-color: var(--orange);
+}
+#userProfile-container .profile-info-container .profile-btn-size {
+  width: 21px;
+  height: 21px;
 }
 #userProfile-container .profile-info-container .user-describe {
   color: var(--contentTextColor);
@@ -1323,6 +1374,17 @@ input:invalid {
   font-size: 15px;
   line-height: 22px;
   color: var(--secondaryTextColor);
+}
+#navpillUser-container .active::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2px;
+  bottom: 0.5px;
+  background: var(--orange);
+}
+#navpillUser-container .active .navpill-title {
+  color: var(--orange);
 }
 
 #user-follower-list-container {
@@ -1370,7 +1432,7 @@ input:invalid {
 
 #setting-form-container {
   width: 639px;
-  height: 100vh;
+  height: 100%;
   border: 1px solid var(--borderColor);
   padding: 24px 23px 0 23px;
 }
@@ -1383,6 +1445,21 @@ input:invalid {
 #setting-form-container .main-btn-style {
   margin-top: 8px;
   width: 88px;
+}
+
+.admin-main-wrapper {
+  width: 937px;
+}
+
+#admin-tweet-element-container {
+  position: relative;
+}
+#admin-tweet-element-container .delete-icon-size {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 21.5px;
+  right: 4.63px;
 }
 
 #admin-user-Profile-card {
@@ -1438,7 +1515,7 @@ input:invalid {
   height: 100vh;
   background-color: var(--secondaryTextColor);
   opacity: 0.8;
-  z-index: 999;
+  z-index: 1;
 }
 
 .popup-error-text {
@@ -1462,7 +1539,7 @@ input:invalid {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  z-index: 1000;
+  z-index: 2;
 }
 #popup-writtingTweet-container .want-reply-post-container {
   width: 100%;
@@ -1526,7 +1603,7 @@ input:invalid {
   color: var(--messageTextColor);
 }
 #popup-writtingTweet-container .writtingTweet-pannel .second-btn-style {
-  width: 64px;
+  width: 68px;
   padding: 8px 16px;
   display: flex;
   align-items: center;
@@ -1554,7 +1631,6 @@ input:invalid {
   left: 50%;
   transform: translate(-50%);
   z-index: 2;
-  position: fixed;
 }
 #popup-profile-editing-container .headerbox {
   width: 100%;
@@ -1577,7 +1653,7 @@ input:invalid {
 }
 #popup-profile-editing-container .headerbox .second-btn-style {
   margin-left: 375px;
-  width: 64px;
+  width: 68px;
   padding: 8px 16px;
   display: flex;
   align-items: center;

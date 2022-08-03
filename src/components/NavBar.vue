@@ -81,34 +81,34 @@
         </li>
       </ul>
     </template>
-    <button
-      class="tweet-btn main-btn-style"
-      @click="showModal"
-    >
-      推文
-    </button>  
+    <router-link to="/main/tweet">
+      <button
+        class="tweet-btn main-btn-style"
+        @click="showModal"
+      >
+        推文
+      </button>
+    </router-link>     
 
-    <template v-if="isAuthenticated">
-      <ul class="nav-list nav-list-bottom">
-        <li>
-          <a
-            href="#"
-            class="nav-link"
-          >
-            <div class="icon-container">
-              <img
-                src="../assets/log out.png"
-                alt=""
-                class="icon-size"
-              >
-            </div>
-            <span
-              class="navbar-index"
-              @click="logout"
-            >登出</span>
-          </a>
-        </li>
-      </ul>
+    <template v-if="isAuthenticated">      
+      <li class="nav-list-bottom">
+        <a
+          href="#"
+          class="nav-link"
+        >
+          <div class="icon-container">
+            <img
+              src="../assets/log out.png"
+              alt=""
+              class="icon-size"
+            >
+          </div>
+          <span
+            class="navbar-index"
+            @click="logout"
+          >登出</span>
+        </a>
+      </li>      
     </template>
   </div>
 </template>

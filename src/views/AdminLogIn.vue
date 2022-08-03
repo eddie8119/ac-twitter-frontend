@@ -50,8 +50,9 @@
 </template>
 
 <script>
-import authorizationAPI from './../apis/authorization'
 import { Toast } from './../utils/helpers'
+import authorizationAPI from './../apis/authorization'
+
 
 export default {
   name: 'AdminLogIn',
@@ -62,11 +63,10 @@ export default {
       isProcessing: false
     }
   },
-  methods: {
-    async handleSubmit (e) {
+  methods:{
+    async handleSubmit () {
       try{
-        console.log('e=',e)
-        if (!this.account || !this.password){
+        if(!this.account || !this.password){
           Toast.fire({
             icon: 'warning',
             title: '請填入 account 和 password'
@@ -77,30 +77,29 @@ export default {
         this.isProcessing = true
 
         const response = await authorizationAPI.adminSignIn({
-          account: this.account,
-          password: this.password
-        })
+        account: this.account,
+        password: this.password
+      })
 
-        const {data} = response
-        if (data.status !== 'success') {
-          throw new Error(data.message)
-        }
+      const {data} = response
 
-        //暫停在這
+      if (data.status !== 'success'){
+        throw new Error(data.message)
+      }
 
-      }catch (error) {
+      localStorage.setItem('adminToken',data.token)
+      
+      this.$router.push('/main')   
+      } catch(error){
         this.password = ''
         this.isProcessing = false
 
         Toast.fire({
           icon: 'warning',
-          title: '輸入的帳號密碼有誤'
+          title: '請確認您輸入了正確的帳號密碼'
         })
-        
-        console.error(error.message)
-      }
+      }      
     }
   }
 }
 </script>  
-

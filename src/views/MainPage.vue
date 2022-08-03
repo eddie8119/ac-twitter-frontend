@@ -4,11 +4,13 @@
     <div class="main-wrapper">
       <NavpillHeaderMain />
       <WrittingTweet @fetch-tweet="fetchTweets" />
-      <TweetList
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
-      />
+      <div class="y-scroll scrollbar">
+        <TweetList
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+        />
+      </div>
     </div>
 
     <div id="recommendColumn-container">

@@ -19,7 +19,7 @@
     >
       <router-link
         :to="{
-          name: 'user-id-replied_tweets',
+          name: 'user-id-replied-tweets',
           params: { userId: user.id }
         }"
         class="navpill-title"                

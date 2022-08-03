@@ -67,7 +67,7 @@ const routes = [
         component: () => import("../components/UserPostList.vue"),
       },
       {
-        path: "replied_tweets",
+        path: "replied-tweets",
         name: "user-replied-tweets",
         component: () => import("../components/UserReplyList.vue"),
       },
@@ -75,6 +75,11 @@ const routes = [
         path: "likes",
         name: "user-likes",
         component: () => import("../components/UserLikeList.vue"),
+      },
+      {
+        path: "edit",
+        name: "user-edit",
+        component: () => import("../components/PopoutEditProfile.vue"),
       },
     ],
   },
@@ -90,8 +95,8 @@ const routes = [
         component: () => import("../components/UserPostList.vue"),
       },
       {
-        path: "replied_tweets",
-        name: "user-id-replied_tweets",
+        path: "replied-tweets",
+        name: "user-id-replied-tweets",
         component: () => import("../components/UserReplyList.vue"),
       },
       {
@@ -116,7 +121,7 @@ const routes = [
         path: "following",
         name: "user-followinglist",
         component: () => import("../components/UserFollowingList.vue"),
-      },
+      },      
     ],
   },
 
@@ -136,14 +141,7 @@ const routes = [
         component: () => import("../components/UserFollowingList.vue"),
       },
     ],
-  },
-  
-  {
-    path: "/admin",
-    name: "admin",
-    component: () => import("../views/AdminLogIn.vue"),
-    beforeEnter: authorizeIsAdmin,
-  },
+  },   
   {
     path: "/admin/main",
     name: "admin-main",
@@ -155,6 +153,11 @@ const routes = [
     name: "admin-users",
     component: () => import("../views/AdminUsers.vue"),
     beforeEnter: authorizeIsAdmin,
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () => import("../views/AdminLogIn.vue"),    
   },
   {
     path: "*",

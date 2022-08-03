@@ -16,7 +16,7 @@
           class="user-writting-post"
           placeholder="有什麼新鮮事"
           required
-        />
+        />       
         <div class="d-flex justify-content-end align-items-end">
           <button
             class="post-btn second-btn-style"
@@ -26,8 +26,7 @@
           </button>
         </div>
       </form>
-    </div>
-    <div class="user-post-under-line" />
+    </div>    
   </div>
 </template>
 
