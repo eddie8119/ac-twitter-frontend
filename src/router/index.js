@@ -67,19 +67,14 @@ const routes = [
         component: () => import("../components/UserPostList.vue"),
       },
       {
-        path: "replied-tweets",
-        name: "user-replied-tweets",
+        path: "replied_tweets",
+        name: "user-replied_tweets",
         component: () => import("../components/UserReplyList.vue"),
       },
       {
         path: "likes",
         name: "user-likes",
         component: () => import("../components/UserLikeList.vue"),
-      },
-      {
-        path: "edit",
-        name: "user-edit",
-        component: () => import("../components/PopoutEditProfile.vue"),
       },
     ],
   },
@@ -95,8 +90,8 @@ const routes = [
         component: () => import("../components/UserPostList.vue"),
       },
       {
-        path: "replied-tweets",
-        name: "user-id-replied-tweets",
+        path: "replied_tweets",
+        name: "user-id-replied_tweets",
         component: () => import("../components/UserReplyList.vue"),
       },
       {
@@ -121,7 +116,7 @@ const routes = [
         path: "following",
         name: "user-followinglist",
         component: () => import("../components/UserFollowingList.vue"),
-      },      
+      },
     ],
   },
 
@@ -141,7 +136,8 @@ const routes = [
         component: () => import("../components/UserFollowingList.vue"),
       },
     ],
-  },   
+  },
+
   {
     path: "/admin/main",
     name: "admin-main",
@@ -157,8 +153,9 @@ const routes = [
   {
     path: "/admin",
     name: "admin",
-    component: () => import("../views/AdminLogIn.vue"),    
+    component: () => import("../views/AdminLogIn.vue"),
   },
+
   {
     path: "*",
     name: "not-found",
@@ -184,7 +181,7 @@ router.beforeEach(async (to, from, next) => {
   if (token && token !== tokenInStore) {
     isAuthenticated = await store.dispatch("fetchCurrentUser");
   }
-  const pathsWithoutAuthentication = ["login", "regist"]; // 對於不需要驗證 token 的頁面
+  const pathsWithoutAuthentication = ["login", "regist", "admin"]; // 對於不需要驗證 token 的頁面
 
   // 如果 token 無效，且進入需要驗證的頁面，則轉址到登入頁
   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {

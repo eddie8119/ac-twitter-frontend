@@ -1,23 +1,27 @@
 <template>
   <div class="d-flex justify-content-center">
-    <NavBar :show-modal="showModal" />
+    <NavBar
+      :show-modal="showModal"
+      :initial-main-page="isMainPage"
+    />
     <div class="main-wrapper">
       <NavpillHeaderMain />
       <WrittingTweet @fetch-tweet="fetchTweets" />
-      <div class="y-scroll scrollbar">
-        <TweetList
-          v-for="tweet in tweets"
-          :key="tweet.id"
-          :initial-tweet="tweet"
-        />
-      </div>
+      <TweetList
+        v-for="tweet in tweets"
+        :key="tweet.id"
+        :initial-tweet="tweet"
+      />
     </div>
 
     <div id="recommendColumn-container">
       <div class="recommendHeader mt-4">
         <h1>推薦跟隨</h1>
       </div>
-      <RecommendColumn />
+      <RecommendColumn
+        :initial-recommend-users="recommendUsers"
+        @fromRCF="updatePage"
+      />
     </div>
   </div>
 </template>
@@ -29,7 +33,9 @@ import NavpillHeaderMain from '../components/NavpillHeaderMain.vue'
 import WrittingTweet from '../components/WrittingTweet.vue'
 import TweetList from '../components/TweetList.vue'
 import tweetsAPI from './../apis/tweets'
+import usersAPI from './../apis/users'
 import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MainPage',
@@ -43,19 +49,46 @@ export default {
   data() {
     return {
       tweets: [],
+      likes: [],
+      recommendUsers: [],
+      isMainPage: true,
       isLoading: true,
     }
   },
+  computed: {
+    ...mapState(['currentUser']),
+  },
   created() {
     this.fetchTweets()
+    this.fetchRecommendUsers()
   },
   methods: {
+    updatePage() {
+      this.fetchRecommendUsers()
+    },
     async fetchTweets() {
       try {
         this.isLoading = true
 
+        const likes = await usersAPI.getUserLikes({ userId: this.currentUser.id })
+        this.likes = likes.data
+
         const responseTweets = await tweetsAPI.getTweets()
-        this.tweets = Array.from(responseTweets.data)
+        this.tweets = responseTweets.data
+        // console.log('this.tweets=', this.tweets)
+        this.tweets = this.tweets.map(tweet => {
+          if (this.likes.some(l => l.TweetId === tweet.id)) {
+            return {
+              ...tweet,
+              isLiked: true,
+            }
+          } else {
+            return {
+              ...tweet,
+              isLiked: false,
+            }
+          }
+        })
 
         this.isLoading = false
       } catch (error) {
@@ -67,6 +100,37 @@ export default {
         })
       }
     },
+    async fetchRecommendUsers() {
+      try {
+        this.isLoading = true
+
+        const { data } = await usersAPI.getUserFollowings({
+          userId: this.currentUser.id, // need currentUser
+        })
+        const userFollowings = data
+        const responseUsers = await usersAPI.getTopUsers()
+        this.recommendUsers = responseUsers.data.map(user => {
+          return {
+            ...user,
+            isFollowed: userFollowings.some(f => f.followingId === user.id),
+          }
+        })
+
+        this.isLoading = false
+      } catch (error) {
+        console.error(error)
+        this.isLoading = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得 RecommendUsers 資料，請稍後再試',
+        })
+      }
+    },
+  },
+  provide() {
+    return {
+      fetchTweets: this.fetchTweets,
+    }
   },
 }
 </script>

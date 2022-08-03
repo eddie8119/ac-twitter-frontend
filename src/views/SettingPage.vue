@@ -1,6 +1,8 @@
 <template>
-  <div class="d-flex">
-    <NavBar />
+  <div class="d-flex justify-content-center">
+    <NavBar
+      :initial-setting="isSetting"
+    />
     <div class="main-wrapper">
       <NavpillHeader />
       <SettingForm />
@@ -14,11 +16,16 @@ import NavpillHeader from "../components/NavpillHeader.vue";
 import SettingForm from "../components/SettingForm.vue";
 
 export default {
-  name: "MainPage",
+  name: "SettingPage",
   components: {
     NavBar,
     NavpillHeader,
     SettingForm,
   },
+  data () {
+    return {
+      isSetting: true,
+    }
+  }
 };
 </script>

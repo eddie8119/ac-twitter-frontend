@@ -1,6 +1,8 @@
 <template>
   <div class="d-flex justify-content-center">
-    <NavBar />
+    <NavBar
+      :initial-profile="isProfile"
+    />
     <div class="main-wrapper">
       <NavpillHeader />
       <UserProfile
@@ -10,12 +12,17 @@
       <!-- 包含 推文、回覆、喜歡的內容 三個分頁 -->
       <NavpillUser
         :initial-user="user"
+        :initial-is-current-user="isCurrentUser"
+        :initial-tweets-active="isTweetsActive"
+        :initial-replies-active="isRepliesActive"
+        :initial-likes-active="isLikesActive"
       />
       <div class="y-scroll scrollbar">
         <router-view
           :initial-tweets="tweets"
           :initial-replies="replies"
           :initial-likes="likes"
+          @fromUserLikeList="updatePage"
         />
       </div>
     </div>
@@ -24,10 +31,9 @@
       <div class="recommendHeader mt-4">
         <h1>推薦跟隨</h1>
       </div>
-      <RecommendColumnFollow
+      <RecommendColumn
         :initial-recommend-users="recommendUsers"
-        @fromRCFremove="updateFromRCFremove"
-        @fromRCFadd="updateFromRCFadd"
+        @fromRCF="updatePage"
       />
     </div>
   </div>
@@ -35,7 +41,7 @@
 
 <script>
 import NavBar from "../components/NavBar.vue"
-import RecommendColumnFollow from "../components/RecommendColumnFollow.vue"
+import RecommendColumn from "../components/RecommendColumn.vue"
 import NavpillHeader from "../components/NavpillHeader.vue"
 import UserProfile from "../components/UserProfile.vue"
 import NavpillUser from "../components/NavpillUser.vue"
@@ -47,10 +53,14 @@ export default {
   name: "UserSelf",
   components: {
     NavBar,
-    RecommendColumnFollow,
+    RecommendColumn,
     NavpillHeader,
     UserProfile,
     NavpillUser,
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.updateRouteName(to.name)
+    next()
   },
   data () {
     return {
@@ -69,7 +79,13 @@ export default {
       tweets: [],
       replies: [],
       likes: [],
+      currentUserLikes: [],
       recommendUsers: [],
+      isCurrentUser: false,
+      isTweetsActive: '',
+      isRepliesActive: '',
+      isLikesActive: '',
+      isProfile: true,
       isProcessing: false
     }
   },
@@ -80,14 +96,29 @@ export default {
     user: "fetchUserTweetsRepliesLikes"
   },
   created () {
-    this.fetchFollowingsFollowers()
+    const userId = this.currentUser.id
+    this.fetchFollowingsFollowers(userId);
     this.fetchRecommendUsers();
+    this.isCurrentUser = true;
+    this.updateRouteName( this.$route.name )
   },
   methods: {
-    async fetchFollowingsFollowers () {
+    updateRouteName(name) {
+      this.isTweetsActive = name === 'user-tweets' ? 'navpill-title-active' : ''
+      this.isRepliesActive = name === 'user-replied_tweets' ? 'navpill-title-active' : ''
+      this.isLikesActive = name === 'user-likes' ? 'navpill-title-active' : ''
+      console.log('isTweetsActive=', this.isTweetsActive)
+      console.log('isRepliesActive=', this.isRepliesActive)
+      console.log('isLikesActive=', this.isLikesActive)
+    },
+    updatePage() {
+      const userId = this.currentUser.id
+      this.fetchFollowingsFollowers(userId);
+      this.fetchRecommendUsers();
+      this.fetchUserTweetsRepliesLikes();
+    },
+    async fetchFollowingsFollowers (userId) {
       try {
-        const userId = this.currentUser.id
-        // console.log('currentUser=', this.currentUser)
         const followingsData = await usersAPI.getUserFollowings({ userId })
         const followings = followingsData.data
 
@@ -106,24 +137,55 @@ export default {
         console.error(error.message)
         Toast.fire({
           icon: 'error',
-          title: '無法取得 User 資料，請稍後再試'
+          title: '無法取得 follow 資料，請稍後再試'
         })
       }
     },
     async fetchUserTweetsRepliesLikes() {
       try {
         console.log('this.user.id=', this.user.id)
+
+        const currentUserLikes = await usersAPI.getUserLikes({userId: this.currentUser.id});
+        this.currentUserLikes = currentUserLikes.data
+
         const tweets = await usersAPI.getUserTweets({ userId: this.user.id })
-        this.tweets = tweets.data
-        // console.log('tweets=', this.tweets)
+        this.tweets = tweets.data.map( tweet => {
+          tweet.isCurrentUser = tweet.UserId === this.currentUser.id ? true : false
+          if( this.currentUserLikes.some(l => l.TweetId === tweet.id) ) {
+            return {
+              ...tweet,
+              isLiked: true
+            }
+          } else {
+            return {
+              ...tweet,
+              isLiked: false
+            }
+          }
+        })
 
         const replies = await usersAPI.getUserReplies({ userId: this.user.id })
-        this.replies = replies.data
-        // console.log('replies=', this.replies)
+        this.replies = replies.data.map( reply => {
+          reply.isCurrentUser = reply.UserId === this.currentUser.id ? true : false
+          return {
+            ...reply
+          }
+        })
 
         const likes = await usersAPI.getUserLikes({ userId: this.user.id })
-        this.likes = likes.data
-        // console.log('likes=', this.likes)
+        this.likes = likes.data.map( like => {
+          if( this.currentUserLikes.some(l => l.TweetId === like.TweetId) ) {
+            return {
+              ...like,
+              isLiked: true
+            }
+          } else {
+            return {
+              ...like,
+              isLiked: false
+            }
+          }
+        })
 
       } catch (error) {
         console.error(error.message);

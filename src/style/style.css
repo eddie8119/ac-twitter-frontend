@@ -772,14 +772,10 @@ input:invalid {
   --recommendBgColor: #fafafb;
 }
 
-.app-body {
-  height: 100%;
-}
-
 .user-name {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .user-acount {
@@ -793,22 +789,6 @@ input:invalid {
   overflow-y: scroll;
 }
 
-.scrollbar::-webkit-scrollbar {
-  width: 15px;
-}
-.scrollbar::-webkit-scrollbar-thumb {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: absolute;
-  width: 8px;
-  height: 25px;
-  left: calc(50% - 4px + 0.5px);
-  top: calc(50% - 12.5px);
-  background: #C1C1C1;
-  border-radius: 4px;
-}
-
 #login-container,
 #regist-container,
 #admin-login-container {
@@ -816,14 +796,13 @@ input:invalid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  margin: 69px auto 0 auto;
 }
 #login-container .logo-img,
 #regist-container .logo-img,
 #admin-login-container .logo-img {
   width: 40px;
   height: 40px;
-  margin-top: 69px;
 }
 #login-container h1,
 #regist-container h1,
@@ -860,12 +839,14 @@ input:invalid {
   background-color: var(--formBgColor);
   border-radius: 2px;
   border-bottom: 2px solid var(--secondaryTextColor);
-  padding: 5px 10.55px;
+  padding: 30px 10.55px 4px 10.55px;
 }
 .form-container input:hover, .form-container input:active {
   border-bottom: 2px solid var(--blue);
 }
 .form-container input::-moz-placeholder {
+  position: absolute;
+  bottom: 4px;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -873,6 +854,8 @@ input:invalid {
   color: var(--placeholderTextColor);
 }
 .form-container input:-ms-input-placeholder {
+  position: absolute;
+  bottom: 4px;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -880,6 +863,8 @@ input:invalid {
   color: var(--placeholderTextColor);
 }
 .form-container input::placeholder {
+  position: absolute;
+  bottom: 4px;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -940,12 +925,28 @@ input:invalid {
 #navbar-container .nav-link:hover, #navbar-container .nav-link:active {
   color: var(--orange);
 }
+#navbar-container .nav-link:hover .house-icon, #navbar-container .nav-link:active .house-icon {
+  content: url("../assets/atIndex@2x.png");
+}
+#navbar-container .nav-link:hover .profile-icon, #navbar-container .nav-link:active .profile-icon {
+  content: url("../assets/atUser_big-removebg-preview.png");
+}
+#navbar-container .nav-link:hover .setting-icon, #navbar-container .nav-link:active .setting-icon {
+  content: url("../assets/Group_big-removebg-preview.png");
+}
+#navbar-container .nav-link:hover .logout-icon, #navbar-container .nav-link:active .logout-icon {
+  content: url("../assets/log_out_big-removebg-preview.png");
+}
 #navbar-container .nav-link .icon-container {
   width: 22px;
   height: 22px;
 }
-#navbar-container .nav-link .navbar-index {
+#navbar-container .nav-link .navbar-index,
+#navbar-container .nav-link .navbar-index-active {
   margin-left: 16.85px;
+}
+#navbar-container .nav-link .navbar-index-active {
+  color: var(--orange);
 }
 #navbar-container li:nth-child(1),
 #navbar-container li:nth-child(2) {
@@ -968,10 +969,10 @@ input:invalid {
   border: 1px solid var(--orange);
 }
 #navbar-container .nav-list-bottom {
-  margin-top: 200px;
+  margin-top: 450px;
 }
 
-pos .main-wrapper {
+.main-wrapper {
   width: 639px;
   margin-right: 21px;
   margin-left: 24px;
@@ -1089,10 +1090,28 @@ pos .main-wrapper {
   margin-right: 8px;
 }
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style,
-#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style {
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style,
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style-active {
   position: absolute;
   right: 16px;
   padding: 8px 16px;
+}
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style-active {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--orange);
+  border: 1px solid var(--orange);
+  height: 40px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style-active:hover {
+  color: var(--orange);
+  background-color: var(--white);
 }
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style {
   display: flex;
@@ -1161,6 +1180,13 @@ pos .main-wrapper {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+#tweet-element-container .tweet-content,
+#user-post-list-container .tweet-content,
+#user-like-list-container .tweet-content,
+#admin-tweet-element-container .tweet-content {
+  width: 100%;
+  background-color: #92929d;
 }
 #tweet-element-container .tweet-icon-show-pannel,
 #user-post-list-container .tweet-icon-show-pannel,
@@ -1312,6 +1338,24 @@ pos .main-wrapper {
   color: var(--white);
   background-color: var(--orange);
 }
+#userProfile-container .profile-info-container .empty-btn-style-active {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--orange);
+  border: 1px solid var(--orange);
+  height: 40px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 16px;
+}
+#userProfile-container .profile-info-container .empty-btn-style-active:hover, #userProfile-container .profile-info-container .empty-btn-style-active:active {
+  color: var(--orange);
+  background-color: var(--white);
+}
 #userProfile-container .profile-info-container .profile-btn,
 #userProfile-container .profile-info-container .profile-btn-solid {
   width: 40px;
@@ -1375,16 +1419,22 @@ pos .main-wrapper {
   line-height: 22px;
   color: var(--secondaryTextColor);
 }
-#navpillUser-container .active::after {
+#navpillUser-container .navpill-title-active {
+  width: 130px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--orange);
+}
+#navpillUser-container .navpill-title-active::after {
   position: absolute;
   content: "";
   width: 100%;
   height: 2px;
   bottom: 0.5px;
   background: var(--orange);
-}
-#navpillUser-container .active .navpill-title {
-  color: var(--orange);
 }
 
 #user-follower-list-container {
@@ -1429,10 +1479,30 @@ pos .main-wrapper {
   color: var(--white);
   background-color: var(--orange);
 }
+#user-follower-list-container .empty-btn-style-active {
+  position: absolute;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  background-color: var(--orange);
+  border: 1px solid var(--orange);
+  height: 40px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 16px;
+}
+#user-follower-list-container .empty-btn-style-active:hover, #user-follower-list-container .empty-btn-style-active:active {
+  color: var(--orange);
+  background-color: var(--white);
+}
 
 #setting-form-container {
   width: 639px;
-  height: 100%;
+  height: 100vh;
   border: 1px solid var(--borderColor);
   padding: 24px 23px 0 23px;
 }
@@ -1515,7 +1585,7 @@ pos .main-wrapper {
   height: 100vh;
   background-color: var(--secondaryTextColor);
   opacity: 0.8;
-  z-index: 1;
+  z-index: 999;
 }
 
 .popup-error-text {
@@ -1539,7 +1609,7 @@ pos .main-wrapper {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  z-index: 2;
+  z-index: 1000;
 }
 #popup-writtingTweet-container .want-reply-post-container {
   width: 100%;
@@ -1631,6 +1701,7 @@ pos .main-wrapper {
   left: 50%;
   transform: translate(-50%);
   z-index: 2;
+  position: fixed;
 }
 #popup-profile-editing-container .headerbox {
   width: 100%;
@@ -1653,7 +1724,7 @@ pos .main-wrapper {
 }
 #popup-profile-editing-container .headerbox .second-btn-style {
   margin-left: 375px;
-  width: 68px;
+  width: 64px;
   padding: 8px 16px;
   display: flex;
   align-items: center;
