@@ -9,7 +9,11 @@
         :initial-main-page="isMainPage"
       />
       <WrittingTweet @fetch-tweet="fetchTweets" />
-      <div class="container-for-scroll scrollbar">
+      <div
+        class="container-for-scroll scrollbar"
+        style="overflow:scroll"        
+        height:100%
+      >
         <TweetList
           v-for="tweet in tweets"
           :key="tweet.id"

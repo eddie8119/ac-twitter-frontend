@@ -178,15 +178,15 @@
 //main area
 .main-wrapper {
   width: 639px;
-  height: 100%;
-  overflow: hidden;      
-  background-color: aqua;
+  height: 100vh;
+  overflow: hidden;    
   margin-right: 21px;
   margin-left: 24px;
   display: flex;
   flex-direction: column;
   .container-for-scroll {
     flex: 1;
+    height: 100%;
     overflow-y: scroll;
   }  
 }
