@@ -24,7 +24,7 @@
           id="user-name"
           v-model="user.name"
           type="text"
-          class="user-name"
+          class="user-account"
           placeholder="請輸入使用者名稱"
           required
         >
@@ -118,6 +118,12 @@ export default {
         const { data } = await userAPI.putUser(this.user)
         if ( data.status ) {
           throw new Error(data.message)
+        }
+        console.log('putUser data=', data)
+        if(data.user.email === this.user.email) {
+          throw new Error('email 已重複註冊！')
+        } else if(data.user.account === this.user.account) {
+          throw new Error('account 已重複註冊！')
         }
         this.$store.commit('setCurrentUser', data)
 

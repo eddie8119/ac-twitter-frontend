@@ -26,7 +26,7 @@
       >
     </router-link>
 
-    <div class="index-wrapper ml-2">
+    <div class="tweet-wrapper ml-2">
       <div class="d-flex align-items-center">
         <router-link
           v-if="isCurrentUser"
@@ -78,14 +78,24 @@
       </router-link>
 
       <div class="tweet-icon-show-pannel d-flex mt-1">
-        <div class="d-flex align-items-center">
-          <img
-            src="../assets/reply.png"
-            alt=""
-            class="tweet-icon-show"
-          >
-          <span class="reply-number ml-1">{{ tweet.replyCount }}</span>
-        </div>
+        <router-link
+          :to="{
+            name: 'replylist',
+            query: {
+              tweetId: tweet.id
+            }
+          }"
+        >
+          <div class="d-flex align-items-center">
+            <img
+              src="../assets/reply.png"
+              alt=""
+              class="tweet-icon-show"
+            >
+            <span class="reply-number ml-1">{{ tweet.replyCount }}</span>
+          </div>
+        </router-link>
+
 
         <div class="d-flex align-items-center ml-8">
           <button
