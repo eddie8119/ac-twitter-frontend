@@ -53,6 +53,11 @@ export default {
     WrittingTweet,
     TweetList,
   },
+  provide() {
+    return {
+      fetchTweets: this.fetchTweets,
+    }
+  },
   data() {
     return {
       tweets: [],
@@ -132,12 +137,7 @@ export default {
           title: '無法取得 RecommendUsers 資料，請稍後再試',
         })
       }
-    },
-  },
-  provide() {
-    return {
-      fetchTweets: this.fetchTweets,
-    }
+    },    
   },
 }
 </script>
