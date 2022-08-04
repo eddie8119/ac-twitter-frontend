@@ -140,9 +140,9 @@ export default {
         this.isProcessing = false
 
         if (error.message === 'Error: Account already exists!') {
-          error.message = "此 Account 已有人使用"
+          error.message = "account 已重複註冊！"
         } else if (error.message === 'Error: Email already exists!') {
-          error.message = "此 Email 已有人使用"
+          error.message = "mail 已重複註冊！"
         }
 
         Toast.fire({
