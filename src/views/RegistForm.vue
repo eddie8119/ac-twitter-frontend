@@ -126,13 +126,7 @@ export default {
           password: this.password,
           checkPassword: this.checkPassword
         })
-        // console.log('data=', data)
-        if(data.user.email === this.email) {
-          throw new Error('email 已重複註冊！')
-        } else if(data.user.account === this.account) {
-          throw new Error('account 已重複註冊！')
-        }
-        if (data.status !== 'success') {
+        if (data.status === 'error') {
           throw new Error(data.message)
         }
 
@@ -144,9 +138,16 @@ export default {
         this.$router.push('/login') // 成功註冊後轉址到登入頁
       }catch (error) {
         this.isProcessing = false
+
+        if (error.message === 'Error: Account already exists!') {
+          error.message = "此 Account 已有人使用"
+        } else if (error.message === 'Error: Email already exists!') {
+          error.message = "此 Email 已有人使用"
+        }
+
         Toast.fire({
           icon: 'warning',
-          title: `無法註冊 - ${error}`
+          title: `無法註冊 - ${error.message}`
         })
       }
     }
