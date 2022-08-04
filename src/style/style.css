@@ -789,6 +789,16 @@ input:invalid {
   overflow-y: scroll;
 }
 
+.scrollbar::-webkit-scrollbar {
+  width: 15px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  width: 8px;
+  height: 25px;
+  background: #C1C1C1;
+  border-radius: 4px;
+}
+
 #login-container,
 #regist-container,
 #admin-login-container {
@@ -1089,6 +1099,12 @@ input:invalid {
   border-radius: 50%;
   margin-right: 8px;
 }
+#recommendColumn-container .recommendAccount-panel .recommendAccount-element .length-ellipsis-70 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 70px;
+}
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style,
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element .second-btn-style,
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element .empty-btn-style-active {
@@ -1160,7 +1176,7 @@ input:invalid {
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
-  color: #171725;
+  color: var(--contentTextColor);
 }
 
 #tweet-element-container,
@@ -1168,6 +1184,7 @@ input:invalid {
 #user-like-list-container,
 #admin-tweet-element-container {
   width: 100%;
+  max-height: 168px;
   border: 1px solid var(--borderColor);
   padding: 16px 24px;
   display: flex;
@@ -1181,12 +1198,23 @@ input:invalid {
   height: 50px;
   border-radius: 50%;
 }
+#tweet-element-container .index-wrapper,
+#user-post-list-container .index-wrapper,
+#user-like-list-container .index-wrapper,
+#admin-tweet-element-container .index-wrapper {
+  width: 100%;
+}
 #tweet-element-container .tweet-content,
 #user-post-list-container .tweet-content,
 #user-like-list-container .tweet-content,
 #admin-tweet-element-container .tweet-content {
-  width: 100%;
-  background-color: #92929d;
+  width: calc(100% - 58px);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--contentTextColor);
+  word-wrap: break-word;
+  overflow: hidden;
 }
 #tweet-element-container .tweet-icon-show-pannel,
 #user-post-list-container .tweet-icon-show-pannel,
