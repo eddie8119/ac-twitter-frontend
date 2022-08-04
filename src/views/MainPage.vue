@@ -54,6 +54,11 @@ export default {
     WrittingTweet,
     TweetList,
   },
+  provide() {
+    return {
+      fetchTweets: this.fetchTweets,
+    }
+  },
   data() {
     return {
       tweets: [],
@@ -134,11 +139,6 @@ export default {
         })
       }
     },
-  },
-  provide() {
-    return {
-      fetchTweets: this.fetchTweets,
-    }
   },
 }
 </script>
