@@ -12,6 +12,7 @@
         :initial-following-user="isfollowingActive"        
       />
 
+
       <div class="container-for-scroll scrollbar">
         <router-view
           :initial-followers="followers"

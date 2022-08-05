@@ -12,7 +12,8 @@
     </router-link>
 
     <div id="popup-writtingTweet-container">
-      <div class="headerbox">
+
+      <div class="headerbox align-items-center">
         <router-link
           :to="{
             name: 'main' // 導引至 主頁
