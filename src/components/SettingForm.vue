@@ -122,7 +122,7 @@ export default {
         if (this.user.name.length > 50) {
           Toast.fire({
             icon: 'warning',
-            title: '名稱字數不可超過140字'
+            title: '名稱字數不可超過50字'
           })
           return
         }
