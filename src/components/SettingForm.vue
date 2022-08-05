@@ -19,7 +19,17 @@
         >
       </div>
       <div class="form-element-group">
-        <label for="user-name">名稱</label>
+        <label
+          for="user-name"
+          class="label-name-style"
+        >
+          <span class="span-neme-style">
+            名稱
+          </span>
+          <span>
+            {{ user.name.length }} / 50
+          </span>
+        </label>
         <input
           id="user-name"
           v-model="user.name"
@@ -72,6 +82,10 @@
         </button>
       </div>
     </form>
+    <span
+      class="popup-error-text"
+      :class="{ show: isErrorExceed }"
+    >字數不可超過140字</span>
   </div>
 </template>
 
@@ -91,6 +105,10 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+        this.user.account = this.user.account.trim()
+        this.user.name = this.user.name.trim()
+        this.user.email = this.user.email.trim()
+        
         if (
           !this.user.account ||
           !this.user.name ||
@@ -101,6 +119,14 @@ export default {
           Toast.fire({
             icon: 'warning',
             title: '請確認已填寫所有欄位'
+          })
+          return
+        }
+
+        if (this.user.name.length > 50) {
+          Toast.fire({
+            icon: 'warning',
+            title: '名稱字數不可超過140字'
           })
           return
         }
