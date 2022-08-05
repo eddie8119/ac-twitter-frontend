@@ -103,7 +103,6 @@ export default {
   name: 'PopoutReply',
    mixins: [fromNowFilter, emptyImageFilter],
    beforeRouteUpdate (to, from, next) {
-    console.log('to=',to)
     next()
   },
    props: {
@@ -127,9 +126,6 @@ export default {
       isErrorExceed: false,
       isErrorEmpty: false,
     }
-  },
-  created() {
-    console.log('created to=',this.$route.to)
   },
   computed: {
     ...mapState(["currentUser","reply"]),
