@@ -7,11 +7,11 @@
     <div class="main-wrapper">
       <NavpillHeaderMain
         :initial-main-page="isMainPage"
-      />
-      <WrittingTweet @fetch-tweet="fetchTweets" />
+      />      
       <div
         class="container-for-scroll scrollbar"
       >
+        <WrittingTweet @fetch-tweet="fetchTweets" />
         <TweetList
           v-for="tweet in tweets"
           :key="tweet.id"
