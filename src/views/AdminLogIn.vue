@@ -18,7 +18,6 @@
           type="text"
           class="admin-account"
           placeholder="請輸入帳號"
-          required
         >
       </div>
       <div class="form-element-group">
@@ -29,7 +28,6 @@
           type="password"
           class="admin-password"
           placeholder="請輸入密碼"
-          required
         >
       </div>
       <button
@@ -40,7 +38,9 @@
         登入
       </button>
       <router-link
-        to="/login"
+        :to="{
+          name: 'login' // 導引至 登入頁
+        }"
         class="submit-other-choice text-right"        
       >
         前台登入
