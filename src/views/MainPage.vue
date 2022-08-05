@@ -9,11 +9,16 @@
         :initial-main-page="isMainPage"
       />
       <WrittingTweet @fetch-tweet="fetchTweets" />
-      <TweetList
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
-      />
+      <div
+        class="container-for-scroll scrollbar"
+        style="overflow:scroll; height:100%;"
+      >
+        <TweetList
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+        />
+      </div>
     </div>
 
     <div id="recommendColumn-container">
@@ -47,6 +52,11 @@ export default {
     NavpillHeaderMain,
     WrittingTweet,
     TweetList,
+  },
+  provide() {
+    return {
+      fetchTweets: this.fetchTweets,
+    }
   },
   data() {
     return {
@@ -127,12 +137,7 @@ export default {
           title: '無法取得 RecommendUsers 資料，請稍後再試',
         })
       }
-    },
-  },
-  provide() {
-    return {
-      fetchTweets: this.fetchTweets,
-    }
+    },    
   },
 }
 </script>
