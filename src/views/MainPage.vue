@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex justify-content-center">
     <NavBar
-      :show-modal="showModal"
       :initial-main-page="isMainPage"
     />
+
     <div class="main-wrapper">
       <NavpillHeaderMain
         :initial-main-page="isMainPage"
@@ -11,7 +11,6 @@
       <WrittingTweet @fetch-tweet="fetchTweets" />
       <div
         class="container-for-scroll scrollbar"
-        style="overflow:scroll; height:100%;"
       >
         <TweetList
           v-for="tweet in tweets"
@@ -137,7 +136,9 @@ export default {
           title: '無法取得 RecommendUsers 資料，請稍後再試',
         })
       }
-    },    
+    },
   },
 }
 </script>
+
+

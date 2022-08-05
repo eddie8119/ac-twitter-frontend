@@ -11,16 +11,26 @@
   color: #92929d;
 }
 
-.y-scroll {
-  overflow-y: scroll;
-}
-
 .scrollbar::-webkit-scrollbar {
+  position: absolute;
   width: 15px;
+  height: 1193px;
+  left: 913px;
+  top: 1px;
+  background: #FAFAFA;
+  box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
 }
 .scrollbar::-webkit-scrollbar-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 10px;
+  position: absolute;
   width: 8px;
   height: 25px;
+  left: calc(50% - 4px + 0.5px);
+  top: calc(50% - 12.5px);
   background: #C1C1C1;
   border-radius: 4px;
 }
@@ -444,13 +454,13 @@
 #user-post-list-container .tweet-wrapper,
 #user-like-list-container .tweet-wrapper,
 #admin-tweet-element-container .tweet-wrapper {
-  width: 100%;
+  width: calc(100% - 58px);
 }
 #tweet-element-container .tweet-content,
 #user-post-list-container .tweet-content,
 #user-like-list-container .tweet-content,
 #admin-tweet-element-container .tweet-content {
-  width: calc(100% - 58px);
+  width: 100%;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
@@ -786,6 +796,13 @@
 #setting-form-container .form-element-group input {
   width: 100%;
 }
+#setting-form-container .label-name-style {
+  display: flex;
+  width: 96%;
+}
+#setting-form-container .span-neme-style {
+  flex: 1;
+}
 #setting-form-container .main-btn-style {
   margin-top: 8px;
   width: 88px;
@@ -850,6 +867,10 @@
 #admin-user-Profile-card .user-follow-info .following-number,
 #admin-user-Profile-card .user-follow-info .follower-number {
   color: var(--black);
+}
+
+.popup-wrapper {
+  position: absolute;
 }
 
 .popup-background {

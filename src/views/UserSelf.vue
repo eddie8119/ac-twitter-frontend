@@ -17,7 +17,7 @@
         :initial-replies-active="isRepliesActive"
         :initial-likes-active="isLikesActive"
       />
-      <div class="y-scroll scrollbar">
+      <div class="container-for-scroll scrollbar">
         <router-view
           :initial-tweets="tweets"
           :initial-replies="replies"
@@ -100,10 +100,10 @@ export default {
     this.fetchFollowingsFollowers(userId);
     this.fetchRecommendUsers();
     this.isCurrentUser = true;
-    this.updateRouteName( this.$route.name )
+    this.updateRouteName( this.$route.name )    
   },
   methods: {
-    updateRouteName(name) {
+    updateRouteName(name) {      
       this.isTweetsActive = name === 'user-tweets' ? 'navpill-title-active' : ''
       this.isRepliesActive = name === 'user-replied_tweets' ? 'navpill-title-active' : ''
       this.isLikesActive = name === 'user-likes' ? 'navpill-title-active' : ''

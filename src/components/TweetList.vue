@@ -73,33 +73,32 @@
         }"
       >
         <p class="tweet-content">
-          {{ tweet.description }}         
+          {{ tweet.description }}
         </p>
       </router-link>
 
       <div class="tweet-icon-show-pannel d-flex mt-1">
-        <router-link
-          :to="{
-            name: 'replylist',
-            query: {
-              tweetId: tweet.id
-            }
-          }"
-        >
-          <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
+          <button
+            class="d-flex"
+            @click.stop.prevent="showModal(tweet.id, tweet.User.avatar, tweet.User.name, tweet.User.account, tweet.createdAt, tweet.description)"
+          >
             <img
               src="../assets/reply.png"
-              alt=""
+              alt="回覆按鈕"
               class="tweet-icon-show"
             >
-            <span class="reply-number ml-1">{{ tweet.replyCount }}</span>
-          </div>
-        </router-link>
+            <span class="reply-number ml-1">
+              {{ tweet.replyCount }}
+            </span>
+          </button>
+        </div>
 
 
         <div class="d-flex align-items-center ml-8">
           <button
             v-if="tweet.isLiked"
+            class="d-flex"
           >
             <img
               src="../assets/likedx2.png"
@@ -107,9 +106,13 @@
               class="tweet-icon-show like-icon"
               @click.stop.prevent="unLike(tweet.id)"
             >
+            <span class="like-number ml-1">
+              {{ tweet.likeCount }}
+            </span>
           </button>
           <button
             v-else
+            class="d-flex"
           >
             <img
               src="../assets/like.png"
@@ -117,10 +120,10 @@
               class="tweet-icon-show like-icon"
               @click.stop.prevent="addLike(tweet.id)"
             >
+            <span class="like-number ml-1">
+              {{ tweet.likeCount }}
+            </span>
           </button>
-          <span class="like-number ml-1">
-            {{ tweet.likeCount }}
-          </span>
         </div>
       </div>
     </div>
@@ -156,12 +159,28 @@ export default {
     this.isCurrentUser = this.tweet.UserId === this.currentUser.id ? true : false
   },
   methods: {
+    showModal (tweetId, toAvatar, toName, toAccount, toCreatedAt, toDescription) {
+      // console.log('tweetId=',tweetId)
+      // console.log('toAvatar=',toAvatar)
+      // console.log('toName=',toName)
+      // console.log('toAccount=',toAccount)
+      // console.log('toCreatedAt=',toCreatedAt)
+      // console.log('toDescription=',toDescription)
+
+      this.$store.commit('setReply', {
+        tweetId,
+        toAvatar,
+        toName,
+        toAccount,
+        toCreatedAt,
+        toDescription,
+        myAvatar: this.currentUser.avatar
+      })
+    },
     async addLike (tweetId) {
       try {
         this.isProcessing = true
-        console.log('tweetId=',tweetId)
         const { data } = await usersAPI.addLike({ tweetId })
-        console.log('data=',data)
         if (data.status === 'error') {
           throw new Error(data.message)
         }
@@ -183,9 +202,7 @@ export default {
     async unLike (tweetId) {
       try {
         this.isProcessing = true
-        console.log('tweetId=',tweetId)
         const { data } = await usersAPI.unLike({ tweetId })
-        console.log('data=',data)
         if (data.status === 'error') {
           throw new Error(data.message)
         }

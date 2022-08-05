@@ -12,16 +12,29 @@
   line-height: 22px;
   color: #92929d;
 }
-.y-scroll {
-  overflow-y: scroll;
-}
+
+//scrollbar 
 .scrollbar {    
   &::-webkit-scrollbar {
+    position: absolute;
     width: 15px;
+    height: 1193px;
+    left: 913px;
+    top: 1px;
+    background: #FAFAFA;
+    box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
   }  
-  &::-webkit-scrollbar-thumb {    
+  &::-webkit-scrollbar-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
+    position: absolute;
     width: 8px;
-    height: 25px;    
+    height: 25px;
+    left: calc(50% - 8px/2 + 0.5px);
+    top: calc(50% - 25px/2);
     background: #C1C1C1;
     border-radius: 4px;
   }
@@ -255,7 +268,6 @@
   }
 }
 
-
 #recommendColumn-container {
   width: 273px; 
   max-height: 100%;   
@@ -352,10 +364,10 @@
     @include userHeadshotSetting;
   }  
   .tweet-wrapper{
-    width: 100%;    
+    width: calc(100% - 58px );      
   }
   .tweet-content{    
-    width: calc(100% - 58px );  
+    width: 100%;   
     @include contentTextStyle;
     @include content-word-wrap;     
     // display: -webkit-box;
@@ -609,6 +621,13 @@
       width: 100%;
     }
   }
+  .label-name-style{
+    display:flex;
+    ;width: 96%;
+  }
+  .span-neme-style {
+    flex:1;
+  }
   .main-btn-style {
     margin-top: 8px;
     width: 88px;
@@ -676,6 +695,9 @@
 }
 
 //彈跳視窗類
+.popup-wrapper{
+  position: absolute;
+}
 .popup-background {
   position: fixed;
   top: 0;
@@ -701,7 +723,7 @@
   width: 634px;
   border-radius: 14px;
   margin: 56px auto 0 auto;
-  background-color: var(--white);
+  background-color: var(--white);  
   position: absolute;
   left: 50%;
   transform: translate(-50%);
