@@ -17,10 +17,21 @@
       <router-link
         v-else
         :to="{
-          name: 'user-id-followerlist',
+          name: 'user-followerlist' // 導引至自己          
+        }"
+        class="navpill-title"
+        :class="isFollowerActive"
+      >
+        追隨者
+      </router-link>
+      <router-link
+        v-else
+        :to="{
+          name: 'user-id-followerlist', // 導引至別人
           params: { userId: user.id }
         }"
         class="navpill-title"
+        :class="isFollowerActive"
       >
         追隨者
       </router-link>
@@ -40,10 +51,21 @@
       <router-link
         v-else
         :to="{
-          name: 'user-id-followinglist',
+          name: 'user-followinglist' // 導引至自己
+        }"
+        class="navpill-title"
+        :class="isFollowingActive"
+      >
+        正在追隨
+      </router-link>
+      <router-link
+        v-else
+        :to="{
+          name: 'user-id-followinglist', // 導引至別人
           params: { userId: user.id }
         }"
         class="navpill-title"
+        :class="isFollowingActive"
       >
         正在追隨
       </router-link>
@@ -53,6 +75,7 @@
 
 <script>
 import { mapState } from "vuex"
+
 export default {
   name: "NavpillUserFollow",
   props: {
@@ -72,14 +95,30 @@ export default {
           followerCount: -1
         }
       }
-    }
+    },
+    initialIsCurrentUser: {
+      type: Boolean,
+      require: true
+    },
+    initialFollowerActive: {
+      type: String,
+      default: ''
+    },
+    initialFollowingActive: {
+      type: String,
+      default: ''
+    },
   },
   data () {
     return {
       user: {
         ...this.initialUser
       },
-      isLoading: true
+      isCurrentUser: this.initialIsCurrentUser,
+      isFollowerActive: this.initialFollowerActive,
+      isFollowingActive: this.initialFollowingActive, 
+      routeName: '',
+      isLoading: true,     
     }
   },
   computed: {
@@ -91,7 +130,14 @@ export default {
         ...this.user,
         ...newValue
       }
-    }
-  }
+      this.user = newValue
+    },
+    initialFollowerActive (newValue) {
+      this.isFollowerActive = newValue
+    },
+    initialFollowingActive (newValue) {
+      this.isFollowingActive = newValue
+    },
+  },
 }
 </script>

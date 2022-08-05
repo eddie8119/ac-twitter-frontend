@@ -6,6 +6,7 @@
     />
 
     <div id="popup-writtingTweet-container">
+
       <div class="headerbox align-items-center">
         <button @click="closeModal">
           <img
