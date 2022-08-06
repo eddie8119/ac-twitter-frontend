@@ -193,10 +193,11 @@
   width: 639px;
   height: 100vh;
   overflow: hidden;    
-  margin-right: 21px;
+  margin-right: 24px;
   margin-left: 24px;
   display: flex;
   flex-direction: column;
+  @include tiny-border-line;
   .container-for-scroll {
     flex: 1;
     height: 100%;
@@ -290,9 +291,11 @@
   }
   .recommendAccount-panel {
     width: 100%;
+    background-color: var(--recommendBgColor);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
     .recommendAccount-element {
-      padding: 16px;
-      background-color: var(--recommendBgColor);
+      padding: 16px;      
       position: relative;
       .user-headshot {
         @include userHeadshotSetting;
@@ -331,11 +334,7 @@
           @include secondBtnStyleChange;
         }
       }     
-    }
-    .recommendAccount-element:last-child {
-      border-bottom-left-radius: 16px;
-      border-bottom-right-radius: 16px;
-    }      
+    }         
   }  
 }
 
@@ -723,7 +722,7 @@
   width: 634px;
   border-radius: 14px;
   margin: 56px auto 0 auto;
-  background-color: var(--white);  
+  background-color: var(--white);
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -736,6 +735,9 @@
     .user-headshot {
       @include userHeadshotSetting;
     }
+    .tweet-wrapper{
+      width: calc(100% - 58px );      
+    }
     .reply-to-who-container {
       font-weight: 400;
       font-size: 16px;
@@ -744,6 +746,7 @@
     }
     .tweet-content {
       @include contentTextStyle;
+      @include content-word-wrap;
     }
     .reply-to-who-acount {
       color: var(--orange);

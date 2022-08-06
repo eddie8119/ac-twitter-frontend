@@ -43,8 +43,7 @@
       <div class="user-follow-info d-flex mt-2">
         <router-link
           :to="{
-            name: 'user-id-followinglist',
-            params: { userId: user.id }
+            name: 'user-followinglist',
           }"
         >
           <span class="following-number">
@@ -55,8 +54,7 @@
         
         <router-link
           :to="{
-            name: 'user-id-followerlist',
-            params: { userId: user.id }
+            name: 'user-followerlist',
           }"
         >
           <span class="follower-number ml-5">

@@ -5,26 +5,31 @@
     />
     <div class="main-wrapper">
       <NavpillHeader />
-      <ReplyPost
-        :initial-tweetid="tweetId"
-        :tweet="tweet"
-        :add-like="addLike"
-        :un-like="unLike"
-      />
-
-      <PostReplyList
-        v-for="reply in replies"
-        :key="reply.id"
-        :initial-reply="reply"
-        :initial-tweetid="tweetId"
-      />
+      <div class="container-for-scroll scrollbar">
+        <ReplyPost
+          :initial-tweetid="tweetId"
+          :tweet="tweet"
+          :add-like="addLike"
+          :un-like="unLike"
+        />
+        <LoadingSpinner v-if="isLoading" />
+        <PostReplyList
+          v-for="reply in replies"
+          v-else
+          :key="reply.id"
+          :initial-reply="reply"
+          :initial-tweetid="tweetId"
+        />
+      </div>
     </div>
 
     <div id="recommendColumn-container">
       <div class="recommendHeader">
         <h1>推薦跟隨</h1>
       </div>
+      <LoadingSpinner v-if="isRecommendUsersLoading" />
       <RecommendColumn
+        v-else
         :initial-recommend-users="recommendUsers"
         @updateRecommendColumn="updatePage"
       />
@@ -48,6 +53,7 @@ import { Toast } from './../utils/helpers'
 import usersAPI from "./../apis/users"
 import tweetsAPI from './../apis/tweets'
 import { mapState } from "vuex"
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 export default {
   name: "ReplyList",
@@ -57,6 +63,7 @@ export default {
     NavpillHeader,
     ReplyPost,
     PostReplyList,
+    LoadingSpinner
   },
   data () {
     return {
@@ -67,7 +74,8 @@ export default {
       recommendUsers: [],
       isProcessing: false,
       isMainPage: true,
-      isLoading: true
+      isLoading: true,
+      isRecommendUsersLoading: true,
     }
   },
   computed: {
@@ -75,7 +83,6 @@ export default {
   },
   created () {
     const { tweetId = ''} = this.$route.query // from components/TweetList.vue
-    // console.log('tweetId=', tweetId)
     this.passTweetId(Number(tweetId));
     this.fetchRecommendUsers();
     this.fetchTweet(Number(tweetId))
@@ -90,7 +97,7 @@ export default {
     },
     async fetchRecommendUsers() {
       try {
-        this.isLoading = true;
+        this.isRecommendUsersLoading = true;
 
         const { data } = await usersAPI.getUserFollowings({
           userId: this.currentUser.id, // need currentUser
@@ -104,10 +111,10 @@ export default {
           };
         });
 
-        this.isLoading = false;
+        this.isRecommendUsersLoading = false;
       } catch (error) {
         console.error(error);
-        this.isLoading = false;
+        this.isRecommendUsersLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得 RecommendUsers 資料，請稍後再試",
@@ -116,8 +123,6 @@ export default {
     },
     async fetchTweet (tweetId) {
       try {
-        this.isLoading = true
-        
         const currentUserLikes = await usersAPI.getUserLikes({userId: this.currentUser.id});
         this.currentUserLikes = currentUserLikes.data
 
@@ -126,11 +131,8 @@ export default {
         })
         this.tweet = data
         this.tweet.isLiked = this.currentUserLikes.some(l => l.TweetId === this.tweet.id) ? true : false
-        // console.log('tweet=', this.tweet)
 
-        this.isLoading = false
       } catch (error) {
-        this.isLoading = false
         Toast.fire({
           icon: 'error',
           title: '無法取得 Tweet 資料，請稍後再試'
@@ -140,12 +142,10 @@ export default {
     async fetchReplies (tweetId) {
       try {
         this.isLoading = true
-
         const { data } = await tweetsAPI.getReplies({
           tweetId,
         })
         this.replies = data
-        console.log('this.replies=', this.replies)
         this.isLoading = false
       } catch (error) {
         console.error(error)
@@ -159,7 +159,6 @@ export default {
      async addLike (tweetId) {
       try {
         this.isProcessing = true
-        console.log('tweetId=',tweetId)
         const { data } = await usersAPI.addLike({ tweetId })
         console.log('data=',data)
         if (data.status === 'error') {
@@ -183,7 +182,6 @@ export default {
      async unLike (tweetId) {
       try {
         this.isProcessing = true
-        console.log('tweetId=',tweetId)
         const { data } = await usersAPI.unLike({ tweetId })
         console.log('data=',data)
         if (data.status === 'error') {

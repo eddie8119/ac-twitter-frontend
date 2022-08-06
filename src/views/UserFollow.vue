@@ -2,18 +2,14 @@
   <div class="d-flex justify-content-center">
     <NavBar />
     <div class="main-wrapper">
-      <NavpillHeader />
-
-      <!-- 包含 追隨者、正在追隨 兩個分頁 -->
-      <NavpillUserFollow
-        :initial-user="user"
-        :initial-is-current-user="isCurrentUser"
-        :initial-follower-active="isfollowerActive"
-        :initial-following-user="isfollowingActive"        
-      />
-
-
+      <NavpillHeader />   
       <div class="container-for-scroll scrollbar">
+        <!-- 包含 追隨者、正在追隨 兩個分頁 -->
+        <NavpillUserFollow
+          :initial-user="user"
+          :initial-follower-active="isFollowerActive"
+          :initial-following-active="isFollowingActive"
+        />
         <router-view
           :initial-followers="followers"
           :initial-followings="followings"
@@ -27,7 +23,9 @@
       <div class="recommendHeader">
         <h1>推薦跟隨</h1>
       </div>
+      <LoadingSpinner v-if="isRecommendUsersLoading" />
       <RecommendColumn
+        v-else
         :initial-recommend-users="recommendUsers"
         @updateRecommendColumn="updatePage"
       />
@@ -43,6 +41,7 @@ import NavpillUserFollow from "../components/NavpillUserFollow.vue"
 import { Toast } from '../utils/helpers'
 import usersAPI from "../apis/users"
 import { mapState } from "vuex"
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 export default {
   name: "UserFollow",
@@ -51,11 +50,13 @@ export default {
     RecommendColumn,
     NavpillHeader,
     NavpillUserFollow,
+    LoadingSpinner
   },
   beforeRouteUpdate (to, from, next) {
-    const { userId } = to.params
-    this.fetchUser(userId)
-    this.userId = Number(userId),
+    this.fetchFollowingsFollowers(this.currentUser.id)
+    this.fetchRecommendUsers()
+    this.updateRouteName(to.name)
+    console.log('to.name',to.name)
     next()
   },
   data () {
@@ -72,42 +73,38 @@ export default {
         followingCount: -1,
         followerCount: -1
       },
-      userId: -1,
       followers: [],
       followings: [],
       currentUserFollowings: [],
       recommendUsers: [],
-      isCurrentUser: false,      
       isFollowerActive:'',
-      isFollowingActive: '',         
-      isProcessing: false
+      isFollowingActive: '',
+      isProcessing: false,
+      isRecommendUsersLoading: true,
     }
   },
   computed: {
     ...mapState(["currentUser"]),
   },
   created () {
-    const { userId } = this.$route.params
-    this.fetchUser(userId),
-    this.userId = Number(userId),
-    this.fetchRecommendUsers();
+    this.user = this.currentUser
+    this.fetchFollowingsFollowers(this.currentUser.id)
+    this.fetchRecommendUsers()
     this.updateRouteName(this.$route.name)
+    console.log('this.$route.name=',this.$route.name)
   },
   methods: {
     updateRouteName(name){
       this.isFollowerActive = name === 'user-followerlist' ? 'navpill-title-active' : ''
       this.isFollowingActive = name === 'user-followinglist' ? 'navpill-title-active' : ''
-      console.log('isfollowerActive=', this.isFollowerActive)
-      console.log('isfollowingActive=', this.isFollowingActive) 
     },
     updatePage() {
-      this.fetchFollowingsFollowers(this.userId)
+      this.fetchFollowingsFollowers(this.currentUser.id)
       this.fetchRecommendUsers()
     },
     async fetchFollowingsFollowers (userId) {
       try {
         const followersData = await usersAPI.getUserFollowers({ userId })
-        const followingsData = await usersAPI.getUserFollowings({ userId })
 
         const currentUserFollowings = await usersAPI.getUserFollowings({ userId: this.currentUser.id })
         this.currentUserFollowings = currentUserFollowings.data
@@ -118,10 +115,10 @@ export default {
             isFollowed: this.currentUserFollowings.some((f) => f.followingId === user.followerId)
           }
         })
-        this.followings = followingsData.data.map((user) => {
+        this.followings = currentUserFollowings.data.map((user) => {
           return {
             ...user,
-            isFollowed: this.currentUserFollowings.some((f) => f.followingId === user.followingId)
+            isFollowed: true
           }
         })
       } catch (error) {
@@ -132,56 +129,9 @@ export default {
         })
       }
     },
-    // fetch 三個東西 getUser getUserFollowings getUserFollowers
-    async fetchUser (userId) {
-      try {
-        const followingsData = await usersAPI.getUserFollowings({ userId })
-        const followings = followingsData.data
-
-        const followersData = await usersAPI.getUserFollowers({ userId })
-        const followers = followersData.data
-
-        console.log('followings=', followings)
-        console.log('followers=', followers)
-
-        const { data } = await usersAPI.getUser({ userId })
-
-        const {
-          id,
-          account,
-          email,
-          name,
-          avatar,
-          cover,
-          introduction,
-          role
-        } = data
-
-        this.user = {
-          ...this.user,
-          id,
-          account,
-          email,
-          name,
-          avatar,
-          cover,
-          introduction,
-          role,
-          followingCount: followings.length,
-          followerCount: followers.length
-        }
-
-      } catch (error) {
-        console.error(error.message)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得 User 資料，請稍後再試'
-        })
-      }
-    },
     async fetchRecommendUsers() {
       try {
-        this.isLoading = true;
+        this.isRecommendUsersLoading = true;
 
         const { data } = await usersAPI.getUserFollowings({
           userId: this.currentUser.id,
@@ -195,10 +145,10 @@ export default {
           };
         });
 
-        this.isLoading = false;
+        this.isRecommendUsersLoading = false;
       } catch (error) {
         console.error(error);
-        this.isLoading = false;
+        this.isRecommendUsersLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得 RecommendUsers 資料，請稍後再試",
