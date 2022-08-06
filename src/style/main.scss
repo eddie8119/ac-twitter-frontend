@@ -190,7 +190,7 @@
 
 //main area
 .main-wrapper {
-  width: 639px;
+  width: 641px;
   height: 100vh;
   overflow: hidden;    
   margin-right: 21px;
@@ -608,7 +608,7 @@
 }
 
 #setting-form-container {
-  width: 639px;
+  width:641px;
   height: 100vh;
   @include tiny-border-line;
   padding: 24px 23px 0 23px;
@@ -694,9 +694,6 @@
 }
 
 //彈跳視窗類
-.popup-wrapper{
-  position: absolute;
-}
 .popup-background {
   position: fixed;
   top: 0;

@@ -310,7 +310,7 @@
 }
 
 .main-wrapper {
-  width: 639px;
+  width: 641px;
   height: 100vh;
   overflow: hidden;
   margin-right: 21px;
@@ -871,7 +871,7 @@
 }
 
 #setting-form-container {
-  width: 639px;
+  width: 641px;
   height: 100vh;
   border: 1px solid var(--borderColor);
   padding: 24px 23px 0 23px;
@@ -953,10 +953,6 @@
 #admin-user-Profile-card .user-follow-info .following-number,
 #admin-user-Profile-card .user-follow-info .follower-number {
   color: var(--black);
-}
-
-.popup-wrapper {
-  position: absolute;
 }
 
 .popup-background {
