@@ -100,7 +100,7 @@
 
 .scrollbar::-webkit-scrollbar {
   position: absolute;
-  width: 15px;
+  width: 8px;
   height: 1193px;
   left: 913px;
   top: 1px;
@@ -313,8 +313,7 @@
   width: 639px;
   height: 100vh;
   overflow: hidden;
-  margin-right: 24px;
-  margin-left: 24px;
+  margin: 0 24px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--borderColor);
@@ -352,14 +351,13 @@
 
 #writtingTweet-container {
   width: 100%;
-  max-height: 139px;
   border: 1px solid var(--borderColor);
   padding: 0 25px;
-  border-bottom: 3px solid var(--borderColor);
+  border-bottom: 10px solid var(--borderColor);
 }
 #writtingTweet-container .writtingTweet-pannel {
   width: 100%;
-  padding: 16px 0;
+  padding: 16px;
 }
 #writtingTweet-container .writtingTweet-pannel .user-headshot {
   width: 50px;
@@ -367,17 +365,22 @@
   border-radius: 50%;
 }
 #writtingTweet-container .writtingTweet-pannel .user-writing-post-form {
-  position: relative;
-  display: flex;
-  flex-grow: 1;
+  width: calc(100% - 58px);
 }
 #writtingTweet-container .writtingTweet-pannel .user-writting-post {
   border: none;
   width: 100%;
-  padding: 1rem;
+  height: 90px;
+  overflow: hidden;
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
+  color: var(--messageTextColor);
+}
+#writtingTweet-container .writtingTweet-pannel .tweet-length-sign {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
   color: var(--messageTextColor);
 }
 #writtingTweet-container .writtingTweet-pannel .second-btn-style {
@@ -424,8 +427,6 @@
 #recommendColumn-container .recommendAccount-panel {
   width: 100%;
   background-color: var(--recommendBgColor);
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
 }
 #recommendColumn-container .recommendAccount-panel .recommendAccount-element {
   padding: 16px;
@@ -500,6 +501,10 @@
   color: var(--orange);
   background-color: var(--white);
   border: 1px solid var(--orange);
+}
+#recommendColumn-container .recommendAccount-panel:last-child {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
 .user-acount-for-post,
@@ -654,12 +659,19 @@
   line-height: 22px;
   color: var(--messageTextColor);
 }
+#reply-post-list-container .tweet-wrapper,
+#user-reply-list-container .tweet-wrapper {
+  width: calc(100% - 58px);
+}
 #reply-post-list-container .tweet-content,
 #user-reply-list-container .tweet-content {
+  width: 100%;
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
   color: var(--contentTextColor);
+  word-wrap: break-word;
+  overflow: hidden;
 }
 #reply-post-list-container .reply-to-who-acount,
 #user-reply-list-container .reply-to-who-acount {
@@ -970,7 +982,8 @@
   z-index: 999;
 }
 
-.popup-error-text {
+.popup-error-text,
+.show-red-sign {
   position: absolute;
   bottom: 3%;
   right: 15%;
@@ -994,9 +1007,20 @@
   z-index: 1000;
 }
 #popup-writtingTweet-container .want-reply-post-container {
+  position: relative;
   width: 100%;
   padding: 16px 24px 24px 24px;
   display: flex;
+}
+#popup-writtingTweet-container .want-reply-post-container:after {
+  content: "";
+  position: absolute;
+  top: 66px;
+  left: 49px;
+  width: 3px;
+  height: calc((100% - 50px) * 0.7);
+  transform: translate(-50%, 20%);
+  background-color: #D5D5DC;
 }
 #popup-writtingTweet-container .want-reply-post-container .user-headshot {
   width: 50px;
@@ -1004,7 +1028,7 @@
   border-radius: 50%;
 }
 #popup-writtingTweet-container .want-reply-post-container .tweet-wrapper {
-  width: calc(100% - 58px);
+  max-width: calc(100% - 58px);
 }
 #popup-writtingTweet-container .want-reply-post-container .reply-to-who-container {
   font-weight: 400;

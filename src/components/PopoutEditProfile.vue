@@ -43,6 +43,7 @@
                   name="cover"
                   accept="image/*"
                   hidden
+                  :disabled="isCoverProcessing"
                   @change="handleFileChange"
                 >
                 <label for="cover">
@@ -53,7 +54,9 @@
                   >
                 </label>
               </span>
-              <span>
+              <span
+                @click="deleteTempCover"
+              >
                 <img
                   src="../assets/icon_delete.png"
                   alt="刪除上傳照片按鈕"
@@ -82,6 +85,7 @@
               name="avatar"
               accept="image/*"
               hidden
+              :disabled="isAvatarProcessing"
               @change="handleFileChange"
             >
             <label for="avatar">
@@ -97,6 +101,16 @@
               <div class="form-element-group">
                 <label for="user-account">名稱</label>
                 <input
+                  v-if="nameLength > 50"
+                  id="user-account"
+                  v-model="name"
+                  type="text"
+                  name="name"
+                  class="user-account formInputStyle error"
+                  required
+                >
+                <input
+                  v-else
                   id="user-account"
                   v-model="name"
                   type="text"
@@ -105,6 +119,12 @@
                   required
                 >
                 <div class="d-flex justify-content-end">
+                  <span
+                    v-show="nameLength > 50"
+                    style="position: absolute; left: 0px; bottom: 0px; font-size:12px; color: red;"
+                  >
+                    字數超出上限！
+                  </span>
                   <span class="editing-world-limit mt-1">{{ nameLength }}/50</span>
                 </div>
               </div>
@@ -119,6 +139,12 @@
                   required
                 />
                 <div class="d-flex justify-content-end">
+                  <span
+                    v-show="introLength > 160"
+                    style="position: absolute; left: 0px; bottom: 0px; font-size:12px; color: red;"
+                  >
+                    字數超出上限！
+                  </span>
                   <span class="editing-world-limit mt-1"> {{ introLength }}/160</span>
                 </div>
               </div>
@@ -173,6 +199,9 @@ export default {
     this.showIntroLength()
   },
   methods: {
+    deleteTempCover() {
+      this.cover = store.state.currentUser.cover
+    },
     showNameLength() {
       this.nameLength = this.name.length
     },
@@ -180,6 +209,19 @@ export default {
       this.introLength = this.introduction.length
     },
     handleFileChange(e) {
+      if (e.target.name === 'cover') {
+        this.isCoverProcessing = true
+        Toast.fire({
+          icon: 'info',
+          title: 'Cover 上傳中，上傳按鈕 disabled',
+        })
+      } else if (e.target.name === 'avatar') {
+        this.isAvatarProcessing = true
+        Toast.fire({
+          icon: 'info',
+          title: 'Avatar 上傳中，上傳按鈕 disabled',
+        })
+      }
       const { files } = e.target
       if (files.length === 0) {
         // 使用者沒有選擇上傳的檔案
@@ -189,10 +231,10 @@ export default {
         // const imageURL = window.URL.createObjectURL(files[0])
         if (e.target.name === 'cover') {
           this.cover = window.URL.createObjectURL(files[0])
-          this.isCoverProcessing = true
+          this.isCoverProcessing = false
         } else {
           this.avatar = window.URL.createObjectURL(files[0])
-          this.isAvatarProcessing = true
+          this.isAvatarProcessing = false
         }
       }
     },
@@ -238,9 +280,7 @@ export default {
         }
 
         this.$store.commit('setCurrentUser', data)
-        
-        this.isCoverProcessing = false
-        this.isAvatarProcessing = false
+
         Toast.fire({
           icon: 'success',
           title: '成功更新！',
