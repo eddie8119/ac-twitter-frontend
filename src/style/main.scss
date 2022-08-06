@@ -190,10 +190,10 @@
 
 //main area
 .main-wrapper {
-  width: 641px;
+  width: 639px;
   height: 100vh;
   overflow: hidden;    
-  margin-right: 21px;
+  margin-right: 24px;
   margin-left: 24px;
   display: flex;
   flex-direction: column;
@@ -608,7 +608,7 @@
 }
 
 #setting-form-container {
-  width:641px;
+  width: 639px;
   height: 100vh;
   @include tiny-border-line;
   padding: 24px 23px 0 23px;
@@ -694,6 +694,9 @@
 }
 
 //彈跳視窗類
+.popup-wrapper{
+  position: absolute;
+}
 .popup-background {
   position: fixed;
   top: 0;
@@ -719,7 +722,7 @@
   width: 634px;
   border-radius: 14px;
   margin: 56px auto 0 auto;
-  background-color: var(--white);  
+  background-color: var(--white);
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -732,6 +735,9 @@
     .user-headshot {
       @include userHeadshotSetting;
     }
+    .tweet-wrapper{
+      width: calc(100% - 58px );      
+    }
     .reply-to-who-container {
       font-weight: 400;
       font-size: 16px;
@@ -740,6 +746,7 @@
     }
     .tweet-content {
       @include contentTextStyle;
+      @include content-word-wrap;
     }
     .reply-to-who-acount {
       color: var(--orange);
@@ -914,4 +921,3 @@
     }
   }
 }
-
