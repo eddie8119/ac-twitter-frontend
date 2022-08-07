@@ -195,7 +195,8 @@
 }
 
 //main area
-.main-wrapper {
+.main-wrapper,
+.admin-main-wrapper {
   width: 639px;
   height: 100vh;
   overflow: hidden;
@@ -644,7 +645,7 @@
 //admin區
 .admin-main-wrapper {
   width: 937px;
-  height: 100%;
+  margin-right: 0;  
 }
 
 #admin-tweet-element-container {

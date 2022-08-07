@@ -316,7 +316,8 @@
   bottom: 0;
 }
 
-.main-wrapper {
+.main-wrapper,
+.admin-main-wrapper {
   width: 639px;
   height: 100vh;
   overflow: hidden;
@@ -325,7 +326,8 @@
   flex-direction: column;
   border: 1px solid var(--borderColor);
 }
-.main-wrapper .container-for-scroll {
+.main-wrapper .container-for-scroll,
+.admin-main-wrapper .container-for-scroll {
   flex: 1;
   height: 100%;
   overflow-y: scroll;
@@ -908,7 +910,7 @@
 
 .admin-main-wrapper {
   width: 937px;
-  height: 100%;
+  margin-right: 0;
 }
 
 #admin-tweet-element-container {
