@@ -18,6 +18,10 @@
   color: var(--messageTextColor);
 }
 
+.swal2-image {
+  border-radius: 50%;
+}
+
 .scrollbar::-webkit-scrollbar {
   position: absolute;
   width: 8px;
@@ -230,7 +234,8 @@
 }
 
 .main-wrapper,
-.admin-main-wrapper {
+.admin-main-wrapper,
+.admin-users-wrapper {
   width: 639px;
   height: 100vh;
   overflow: hidden;
@@ -240,7 +245,8 @@
   border: 1px solid var(--borderColor);
 }
 .main-wrapper .container-for-scroll,
-.admin-main-wrapper .container-for-scroll {
+.admin-main-wrapper .container-for-scroll,
+.admin-users-wrapper .container-for-scroll {
   flex: 1;
   height: 100%;
   overflow-y: scroll;
@@ -826,6 +832,11 @@
   margin-right: 0;
 }
 
+.admin-users-wrapper {
+  flex: 1;
+  margin-right: 0;
+}
+
 #admin-tweet-element-container {
   position: relative;
 }
@@ -880,6 +891,15 @@
 #admin-user-Profile-card .user-follow-info .following-number,
 #admin-user-Profile-card .user-follow-info .follower-number {
   color: var(--black);
+}
+
+.admin-card-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .popup-wrapper {
